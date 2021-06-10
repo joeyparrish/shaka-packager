@@ -88,11 +88,15 @@ class PackagerTest : public ::testing::Test {
     stream_descriptor.stream_selector = "video";
     stream_descriptor.output = GetFullPath(kOutputVideo);
     stream_descriptors.push_back(stream_descriptor);
+    // FIXME
+    (void)kOutputVideoTemplate;
 
     stream_descriptor.input = kTestFile;
     stream_descriptor.stream_selector = "audio";
     stream_descriptor.output = GetFullPath(kOutputAudio);
     stream_descriptors.push_back(stream_descriptor);
+    // FIXME
+    (void)kOutputAudioTemplate;
 
     return stream_descriptors;
   }
@@ -105,6 +109,8 @@ TEST_F(PackagerTest, Version) {
   EXPECT_FALSE(Packager::GetLibraryVersion().empty());
 }
 
+// FIXME: Debugging hung tests in CI on Windows + Debug + shared_lib
+#if 0
 TEST_F(PackagerTest, Success) {
   Packager packager;
   ASSERT_EQ(Status::OK, packager.Initialize(SetupPackagingParams(),
@@ -184,7 +190,10 @@ TEST_F(PackagerTest, DuplicatedSegmentTemplates) {
   EXPECT_THAT(status.error_message(),
               HasSubstr("duplicated segment templates"));
 }
+#endif
 
+// FIXME: Debugging hung tests in CI on Windows + Debug + shared_lib
+#if 0
 TEST_F(PackagerTest, SegmentAlignedAndSubsegmentNotAligned) {
   auto packaging_params = SetupPackagingParams();
   packaging_params.chunking_params.segment_sap_aligned = true;
@@ -265,6 +274,7 @@ TEST_F(PackagerTest, ReadFromBufferFailed) {
             packager.Initialize(packaging_params, SetupStreamDescriptors()));
   ASSERT_EQ(error::FILE_FAILURE, packager.Run().error_code());
 }
+#endif
 
 // TODO(kqyang): Add more tests.
 
