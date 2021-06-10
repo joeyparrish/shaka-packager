@@ -1,0 +1,201 @@
+name: GitHub Release
+
+# TODO: Abort if the changelog doesn't match the tag
+
+# Runs when a new tag is created that looks like a version number.
+#
+# Creates a draft release on GitHub with the latest release notes, runs all
+# builds and tests on all OSes, attaches release assets to the release, and
+# fully publishes the release.
+#
+# Publishing the release triggers additional workflows for NPM & Docker Hub
+# releases.
+on:
+  push:
+    tags:
+      - 'v*.*'
+
+jobs:
+  draft_release:
+    name: Draft GitHub release
+    runs-on: ubuntu-latest
+    outputs:
+      id: ${{ steps.draft_release.outputs.id }}
+      upload_url: ${{ steps.draft_release.outputs.upload_url }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          path: src
+
+      - name: Extract release notes
+        run: |
+          cd src
+          packager/tools/extract_latest_release_notes.py > ../RELEASE_NOTES.md
+
+      - name: Draft release
+        id: draft_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          # NOTE: github.event.inputs.tag is used for manual testing.  If
+          # that's not set, use github.ref, which will be be set based on the
+          # tag event trigger.
+          tag_name: ${{ github.ref }}
+          release_name: ${{ github.ref }}
+          body_path: RELEASE_NOTES.md
+          draft: true
+
+  build_test_and_upload:
+    needs: draft_release
+    strategy:
+      matrix:
+        os: ['ubuntu-latest', 'macos-latest', 'windows-latest']
+        build_type: ['Debug', 'Release']
+        lib_type: ['static', 'shared']
+        include:
+          - os: ubuntu-latest
+            os_name: linux
+            exe_ext: ""
+            zip_ext: ".tar.gz"
+            zip_mime_type: application/x-tar
+          - os: macos-latest
+            os_name: osx
+            exe_ext: ""
+            zip_ext: ".tar.gz"
+            zip_mime_type: application/x-tar
+          - os: windows-latest
+            os_name: win
+            exe_ext: ".exe"
+            zip_ext: ".zip"
+            zip_mime_type: application/zip
+
+    name: Build and test ${{ matrix.os_name }} ${{ matrix.build_type }} ${{ matrix.lib_type }}
+    runs-on: ${{ matrix.os }}
+
+    env:
+      MACOSX_DEPLOYMENT_TARGET: "10.10"
+      GYP_DEFINES: "libpackager_type=${{ matrix.lib_type }}_library"
+      DEPOT_TOOLS_WIN_TOOLCHAIN: "0"
+      GYP_MSVS_VERSION: "2019"
+      GYP_MSVS_OVERRIDE_PATH: "C:/Program Files (x86)/Microsoft Visual Studio/2019/Enterprise"
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          path: src
+
+      - name: Install depot tools
+        # NOTE: can't use actions/checkout here because this is not hosted on
+        # GitHub.
+        run: |
+          git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git
+          echo "${GITHUB_WORKSPACE}/depot_tools" >> $GITHUB_PATH
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 2.7
+
+      - name: Install Mac SDK 10.3
+        if: matrix.os_name == 'osx'
+        # NOTE: macOS 11 doesn't work with our (old) version of Chromium build,
+        # and the latest Chromium build doesn't work with Packager's build
+        # system.  To work around this, we need an older SDK version, and to
+        # get that, we need an older XCode version.  XCode 10.3 has SDK 10.14,
+        # which works.
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: 10.3
+
+      - name: Configure gclient
+        run: |
+          depot_tools/gclient config https://github.com/google/shaka-packager.git --name=src --unmanaged
+
+      - name: Sync gclient
+        run: |
+          depot_tools/gclient sync
+
+      - name: Build
+        run: |
+          depot_tools/ninja -C src/out/${{ matrix.build_type }}
+
+      - name: Test
+        shell: bash
+        run: |
+          # NOTE: Some of these tests must be run from the "src" directory.
+          cd src
+          if [[ "${{ matrix.os_name }}" == "osx" ]]; then
+            export DYLD_FALLBACK_LIBRARY_PATH=out/${{ matrix.build_type }}
+          fi
+          for i in out/${{ matrix.build_type }}/*test${{ matrix.exe_ext }}; do "$i" || exit 1; done
+          python out/${{ matrix.build_type }}/packager_test.py -v --libpackager_type=${{ matrix.lib_type }}_library
+
+      - name: Prepare assets
+        if: matrix.build_type == 'Release' && matrix.lib_type == 'static'
+        shell: bash
+        run: |
+          mkdir assets
+          mv \
+            src/out/${{ matrix.build_type }}/packager${{ matrix.exe_ext }} \
+            assets/packager-${{ matrix.os_name }}${{ matrix.exe_ext }}
+          mv \
+            src/out/${{ matrix.build_type }}/mpd_generator${{ matrix.exe_ext }} \
+            assets/mpd_generator-${{ matrix.os_name }}${{ matrix.exe_ext }}
+          if [[ "${{ matrix.os_name }}" == "win" ]]; then
+            (
+              cd src/out/Release/
+              7z a ../../../pssh-box.py.zip pyproto pssh-box.py
+            )
+            mv pssh-box.py.zip assets/pssh-box-${{ matrix.os_name }}.py.zip
+          else
+            tar -czf pssh-box.py.tar.gz -C src/out/Release pyproto pssh-box.py
+            mv pssh-box.py.tar.gz assets/pssh-box-${{ matrix.os_name }}.py.tar.gz
+          fi
+
+      - name: Upload pssh-box
+        if: matrix.build_type == 'Release' && matrix.lib_type == 'static'
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ needs.draft_release.outputs.upload_url }}
+          asset_path: assets/pssh-box-${{ matrix.os_name }}.py${{ matrix.zip_ext }}
+          asset_name: pssh-box-${{ matrix.os_name }}.py${{ matrix.zip_ext }}
+          asset_content_type: ${{ matrix.zip_mime_type }}
+
+      - name: Upload packager
+        if: matrix.build_type == 'Release' && matrix.lib_type == 'static'
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ needs.draft_release.outputs.upload_url }}
+          asset_path: assets/packager-${{ matrix.os_name }}${{ matrix.exe_ext }}
+          asset_name: packager-${{ matrix.os_name }}${{ matrix.exe_ext }}
+          asset_content_type: binary/octet-stream
+
+      - name: Upload mpd_generator
+        if: matrix.build_type == 'Release' && matrix.lib_type == 'static'
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ needs.draft_release.outputs.upload_url }}
+          asset_path: assets/mpd_generator-${{ matrix.os_name }}${{ matrix.exe_ext }}
+          asset_name: mpd_generator-${{ matrix.os_name }}${{ matrix.exe_ext }}
+          asset_content_type: binary/octet-stream
+
+  publish_release:
+    name: Publish GitHub release
+    needs: [draft_release, build_test_and_upload]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Publish release
+        uses: eregon/publish-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          release_id: ${{ needs.draft_release.outputs.id }}
