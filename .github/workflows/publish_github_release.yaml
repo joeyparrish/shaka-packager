@@ -1,0 +1,28 @@
+name: Publish GitHub Release
+
+# Fully publishes a draft release.
+#
+# Triggered in a chain initiated by the draft_github_release workflow, after
+# the build_and_test workflow has finished attaching release artifacts to the
+# draft release.
+#
+# Publishing the release then triggers additional workflows for NPM & Docker Hub
+# releases.
+on:
+  workflow_dispatch:
+    inputs:
+      release_id:
+        description: "The draft release ID."
+        required: True
+
+jobs:
+  publish_release:
+    name: Publish GitHub release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Publish release
+        uses: eregon/publish-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          release_id: ${{ github.event.inputs.release_id }}
