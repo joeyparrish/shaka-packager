@@ -1,0 +1,37 @@
+name: NPM Release
+
+# Runs when a new release is created on GitHub.
+# Creates a corresponding NPM release and publishes it.
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  publish_npm:
+    name: Publish to NPM
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          path: src
+          ref: ${{ github.event.release.tag_name }}
+
+      - name: Setup NodeJS
+        uses: actions/setup-node@v1
+        with:
+          node-version: 10
+
+      - name: Set package version
+        run: |
+          npm version ${{ github.event.release.tag_name }}
+
+      - name: Publish NPM package
+        uses: JS-DevTools/npm-publish@v1
+        with:
+          token: ${{ secrets.NPM_CI_TOKEN }}
+          package: npm/package.json
+          check-version: false
+          access: public  # FIXME
+          # FIXME: fix package.json name

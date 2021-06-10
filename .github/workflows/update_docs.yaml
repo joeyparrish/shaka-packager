@@ -1,0 +1,41 @@
+name: Update Docs
+
+# Runs when a new release is created on GitHub.
+# Pushes updated docs to gh-pages.
+
+on:
+  release:
+    types: [published]
+  # FIXME: temporary
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: "The ref to build docs from."
+        required: True
+
+jobs:
+  publish_docs:
+    name: Publish updated docs
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          path: src
+          ref: ${{ github.event.inputs.ref || github.event.release.tag_name }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+
+      - name: Install Sphinx and other modules
+        run: |
+          pip install wheel sphinxcontrib.plantuml recommonmark cloud_sptheme breath
+
+      - name: Generate docs
+        run: |
+          cd src
+          make -C docs/ html
+          doxygen docs/Doxyfile
+        # FIXME: WIP
