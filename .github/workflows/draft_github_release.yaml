@@ -1,0 +1,55 @@
+name: Draft GitHub Release
+
+# Creates a draft release on GitHub with the latest release notes, then chains
+# to the build_and_test workflow and the publish_github_release workflow.
+#
+# Collectively, this will build and tests on all OSes, attach release artifacts
+# to the release, and fully publish the release.
+#
+# Publishing the release then triggers additional workflows for NPM & Docker Hub
+# releases.
+#
+# Runs when a new tag is created that looks like a version number.
+on:
+  push:
+    tags:
+      - "v*.*"
+
+jobs:
+  draft_release:
+    name: Draft GitHub release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          path: src
+
+      - name: Extract release notes
+        run: |
+          cd src
+          packager/tools/extract_latest_release_notes.py > ../RELEASE_NOTES.md
+          # TODO: Abort if the changelog doesn't match the release tag
+
+      - name: Draft release
+        id: draft_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: ${{ github.ref }}
+          body_path: RELEASE_NOTES.md
+          draft: true
+
+      - name: Start build and test, then publish
+        run: |
+          cd src
+          gh auth status
+          gh workflow run build_and_test.yaml \
+              -f 'ref=${{ github.ref }}' \
+              -f 'release_id=${{ steps.draft_release.outputs.id }}' \
+              -f 'next_workflow=publish_github_release' \
+              -f 'next_workflow_payload={ "release_id": "${{ steps.draft_release.outputs.id }}" }'
+        env:
+          GITHUB_TOKEN: ${{ secrets.WORKFLOW_DISPATCH_TOKEN }}
