@@ -33,6 +33,10 @@
         'variables': {
           'clang_warning_flags': [
             '-Wimplicit-fallthrough',
+
+            # For base (headers included in Shaka code):
+            '-Wno-deprecated-copy-with-user-provided-copy',
+            '-Wno-implicit-const-int-float-conversion',
           ],
           # Revert the relevant settings in Chromium's common.gypi.
           'clang_warning_flags_unset': [
@@ -60,6 +64,13 @@
           'clang_warning_flags': [
             '-Wno-tautological-constant-compare',
             '-Wno-unguarded-availability',
+            # For libpng:
+            '-Wno-unused-but-set-variable',
+            # For protobuf:
+            '-Wno-misleading-indentation',
+            # For base:
+            '-Wno-deprecated-copy-with-user-provided-copy',
+            '-Wno-implicit-const-int-float-conversion',
           ],
         },
         'msvs_disabled_warnings': [
