@@ -73,7 +73,7 @@ class CueAlignmentHandler : public MediaHandler {
   Status RunThroughSamples(StreamState* stream);
 
   SyncPointQueue* const sync_points_ = nullptr;
-  std::vector<StreamState> stream_states_;
+  std::vector<std::shared_ptr<StreamState>> stream_states_;
 
   // A common hint used by all streams. When a new cue is given to all streams,
   // the hint will be updated. The hint will always be larger than any cue. The
