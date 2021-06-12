@@ -147,7 +147,7 @@ class SHAKA_EXPORT Status {
 
  private:
   error::Code error_code_;
-  std::string error_message_;
+  SHAKA_EXPORT std::string error_message_;
 
   // Not using DISALLOW_COPY_AND_ASSIGN here intentionally to allow the compiler
   // generated copy constructor and assignment operator.
