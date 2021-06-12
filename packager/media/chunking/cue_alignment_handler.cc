@@ -80,6 +80,10 @@ CueAlignmentHandler::CueAlignmentHandler(SyncPointQueue* sync_points)
 Status CueAlignmentHandler::InitializeInternal() {
   sync_points_->AddThread();
   stream_states_.resize(num_input_streams());
+  for (size_t stream_index = 0; stream_index < stream_states_.size();
+       stream_index++) {
+    stream_states_[stream_index].reset(new StreamState());
+  }
 
   // Get the first hint for the stream. Use a negative hint so that if there is
   // suppose to be a sync point at zero, we will still respect it.
@@ -103,13 +107,13 @@ Status CueAlignmentHandler::Process(std::unique_ptr<StreamData> data) {
 }
 
 Status CueAlignmentHandler::OnFlushRequest(size_t stream_index) {
-  stream_states_[stream_index].to_be_flushed = true;
+  stream_states_[stream_index]->to_be_flushed = true;
 
   // We need to wait for all stream to flush before we can flush each stream.
   // This allows cached buffers to be cleared and cues to be properly
   // synchronized and set on all streams.
-  for (const StreamState& stream_state : stream_states_) {
-    if (!stream_state.to_be_flushed) {
+  for (const std::shared_ptr<StreamState>& stream_state : stream_states_) {
+    if (!stream_state->to_be_flushed) {
       return Status::OK;
     }
   }
@@ -118,13 +122,13 @@ Status CueAlignmentHandler::OnFlushRequest(size_t stream_index) {
   // them. Video and non-video streams have different allowances here. Video
   // should absolutely have no cues or samples where as non-video streams may
   // have cues or samples.
-  for (StreamState& stream : stream_states_) {
-    DCHECK(stream.to_be_flushed);
+  for (std::shared_ptr<StreamState>& stream : stream_states_) {
+    DCHECK(stream->to_be_flushed);
 
-    if (stream.info->stream_type() == kStreamVideo) {
-      DCHECK_EQ(stream.samples.size(), 0u)
+    if (stream->info->stream_type() == kStreamVideo) {
+      DCHECK_EQ(stream->samples.size(), 0u)
           << "Video streams should not store samples";
-      DCHECK_EQ(stream.cues.size(), 0u)
+      DCHECK_EQ(stream->cues.size(), 0u)
           << "Video streams should not store cues";
     }
   }
@@ -139,19 +143,19 @@ Status CueAlignmentHandler::OnFlushRequest(size_t stream_index) {
 
   // Now that there are new cues, it may be possible to dispatch some of the
   // samples that may be left waiting.
-  for (StreamState& stream : stream_states_) {
-    RETURN_IF_ERROR(RunThroughSamples(&stream));
-    DCHECK_EQ(stream.samples.size(), 0u);
+  for (std::shared_ptr<StreamState>& stream : stream_states_) {
+    RETURN_IF_ERROR(RunThroughSamples(stream.get()));
+    DCHECK_EQ(stream->samples.size(), 0u);
 
     // Ignore extra cues at the end, except for text, as they will result in
     // empty DASH Representations, which is not spec compliant.
     // For text, if the cue is before the max end time, it will still be
     // dispatched as the text samples intercepted by the cue can be split into
     // two at the cue point.
-    for (auto& cue : stream.cues) {
+    for (auto& cue : stream->cues) {
       // |max_text_sample_end_time_seconds| is always 0 for non-text samples.
       if (cue->cue_event->time_in_seconds <
-          stream.max_text_sample_end_time_seconds) {
+          stream->max_text_sample_end_time_seconds) {
         RETURN_IF_ERROR(Dispatch(std::move(cue)));
       } else {
         VLOG(1) << "Ignore extra cue in stream " << cue->stream_index
@@ -159,17 +163,18 @@ Status CueAlignmentHandler::OnFlushRequest(size_t stream_index) {
                 << "s in the end.";
       }
     }
-    stream.cues.clear();
+    stream->cues.clear();
   }
 
   return FlushAllDownstreams();
 }
 
 Status CueAlignmentHandler::OnStreamInfo(std::unique_ptr<StreamData> data) {
-  StreamState& stream_state = stream_states_[data->stream_index];
+  std::shared_ptr<StreamState>& stream_state =
+      stream_states_[data->stream_index];
   // Keep a copy of the stream info so that we can check type and check
   // timescale.
-  stream_state.info = data->stream_info;
+  stream_state->info = data->stream_info;
 
   return Dispatch(std::move(data));
 }
@@ -179,9 +184,9 @@ Status CueAlignmentHandler::OnVideoSample(std::unique_ptr<StreamData> sample) {
   DCHECK(sample->media_sample);
 
   const size_t stream_index = sample->stream_index;
-  StreamState& stream = stream_states_[stream_index];
+  std::shared_ptr<StreamState>& stream = stream_states_[stream_index];
 
-  const double sample_time = TimeInSeconds(*stream.info, *sample);
+  const double sample_time = TimeInSeconds(*stream->info, *sample);
   const bool is_key_frame = sample->media_sample->is_key_frame();
 
   if (is_key_frame && sample_time >= hint_) {
@@ -195,9 +200,9 @@ Status CueAlignmentHandler::OnVideoSample(std::unique_ptr<StreamData> sample) {
     }
 
     RETURN_IF_ERROR(UseNewSyncPoint(std::move(next_sync)));
-    DCHECK_EQ(stream.cues.size(), 1u);
-    RETURN_IF_ERROR(Dispatch(std::move(stream.cues.front())));
-    stream.cues.pop_front();
+    DCHECK_EQ(stream->cues.size(), 1u);
+    RETURN_IF_ERROR(Dispatch(std::move(stream->cues.front())));
+    stream->cues.pop_front();
   }
 
   return Dispatch(std::move(sample));
@@ -209,11 +214,11 @@ Status CueAlignmentHandler::OnNonVideoSample(
   DCHECK(sample->media_sample || sample->text_sample);
 
   const size_t stream_index = sample->stream_index;
-  StreamState& stream_state = stream_states_[stream_index];
+  std::shared_ptr<StreamState>& stream_state = stream_states_[stream_index];
 
   // Accept the sample. This will output it if it comes before the hint point or
   // will cache it if it comes after the hint point.
-  RETURN_IF_ERROR(AcceptSample(std::move(sample), &stream_state));
+  RETURN_IF_ERROR(AcceptSample(std::move(sample), stream_state.get()));
 
   // If all the streams are waiting on a hint, it means that none has next sync
   // point determined. It also means that there are no video streams and we need
@@ -242,14 +247,14 @@ Status CueAlignmentHandler::OnSample(std::unique_ptr<StreamData> sample) {
   const size_t stream_index = sample->stream_index;
 
   if (sample->text_sample) {
-    StreamState& stream = stream_states_[stream_index];
-    stream.max_text_sample_end_time_seconds =
-        std::max(stream.max_text_sample_end_time_seconds,
-                 TextEndTimeInSeconds(*stream.info, *sample));
+    std::shared_ptr<StreamState>& stream = stream_states_[stream_index];
+    stream->max_text_sample_end_time_seconds =
+        std::max(stream->max_text_sample_end_time_seconds,
+                 TextEndTimeInSeconds(*stream->info, *sample));
   }
 
   const StreamType stream_type =
-      stream_states_[stream_index].info->stream_type();
+      stream_states_[stream_index]->info->stream_type();
   const bool is_video = stream_type == kStreamVideo;
 
   return is_video ? OnVideoSample(std::move(sample))
@@ -263,18 +268,18 @@ Status CueAlignmentHandler::UseNewSyncPoint(
 
   for (size_t stream_index = 0; stream_index < stream_states_.size();
        stream_index++) {
-    StreamState& stream = stream_states_[stream_index];
-    stream.cues.push_back(StreamData::FromCueEvent(stream_index, new_sync));
+    std::shared_ptr<StreamState>& stream = stream_states_[stream_index];
+    stream->cues.push_back(StreamData::FromCueEvent(stream_index, new_sync));
 
-    RETURN_IF_ERROR(RunThroughSamples(&stream));
+    RETURN_IF_ERROR(RunThroughSamples(stream.get()));
   }
 
   return Status::OK;
 }
 
 bool CueAlignmentHandler::EveryoneWaitingAtHint() const {
-  for (const StreamState& stream_state : stream_states_) {
-    if (stream_state.samples.empty()) {
+  for (const std::shared_ptr<StreamState>& stream_state : stream_states_) {
+    if (stream_state->samples.empty()) {
       return false;
     }
   }
