@@ -1,0 +1,8 @@
+This is a placeholder.
+
+We are using very old versions of the Chromium build system, and Chromium build
+from that era wants a libc++-static library for Mac.  This has since been
+removed from Chromium, because it is not necessary in newer macOS SDKs.  Even
+though we target a new enough version of macOS not to need the libc++-static
+hack, the build system still tells the compiler to expect this folder to exist.
+The contents are not actually needed, though.
