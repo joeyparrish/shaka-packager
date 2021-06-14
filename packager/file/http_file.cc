@@ -166,7 +166,6 @@ HttpFile::HttpFile(HttpMethod method,
       download_cache_(FLAGS_io_cache_size),
       upload_cache_(FLAGS_io_cache_size),
       curl_(curl_easy_init()),
-      status_(Status::OK),
       user_agent_(FLAGS_user_agent),
       task_exit_event_(base::WaitableEvent::ResetPolicy::MANUAL,
                        base::WaitableEvent::InitialState::NOT_SIGNALED) {
