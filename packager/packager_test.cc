@@ -28,6 +28,7 @@ const char kOutputVideoTemplate[] = "output_video_$Number$.m4s";
 const char kOutputAudio[] = "output_audio.mp4";
 const char kOutputAudioTemplate[] = "output_audio_$Number$.m4s";
 const char kOutputMpd[] = "output.mpd";
+const Status OK;
 
 const double kSegmentDurationInSeconds = 1.0;
 const uint8_t kKeyId[] = {
@@ -107,9 +108,9 @@ TEST_F(PackagerTest, Version) {
 
 TEST_F(PackagerTest, Success) {
   Packager packager;
-  ASSERT_EQ(Status::OK, packager.Initialize(SetupPackagingParams(),
-                                            SetupStreamDescriptors()));
-  ASSERT_EQ(Status::OK, packager.Run());
+  ASSERT_EQ(OK, packager.Initialize(SetupPackagingParams(),
+                                    SetupStreamDescriptors()));
+  ASSERT_EQ(OK, packager.Run());
 }
 
 TEST_F(PackagerTest, MissingStreamDescriptors) {
@@ -190,9 +191,9 @@ TEST_F(PackagerTest, SegmentAlignedAndSubsegmentNotAligned) {
   packaging_params.chunking_params.segment_sap_aligned = true;
   packaging_params.chunking_params.subsegment_sap_aligned = false;
   Packager packager;
-  ASSERT_EQ(Status::OK,
+  ASSERT_EQ(OK,
             packager.Initialize(packaging_params, SetupStreamDescriptors()));
-  ASSERT_EQ(Status::OK, packager.Run());
+  ASSERT_EQ(OK, packager.Run());
 }
 
 TEST_F(PackagerTest, SegmentNotAlignedButSubsegmentAligned) {
@@ -220,9 +221,9 @@ TEST_F(PackagerTest, WriteOutputToBuffer) {
       .WillRepeatedly(ReturnArg<2>());
 
   Packager packager;
-  ASSERT_EQ(Status::OK,
+  ASSERT_EQ(OK,
             packager.Initialize(packaging_params, SetupStreamDescriptors()));
-  ASSERT_EQ(Status::OK, packager.Run());
+  ASSERT_EQ(OK, packager.Run());
 }
 
 TEST_F(PackagerTest, ReadFromBuffer) {
@@ -243,9 +244,9 @@ TEST_F(PackagerTest, ReadFromBuffer) {
           })));
 
   Packager packager;
-  ASSERT_EQ(Status::OK,
+  ASSERT_EQ(OK,
             packager.Initialize(packaging_params, SetupStreamDescriptors()));
-  ASSERT_EQ(Status::OK, packager.Run());
+  ASSERT_EQ(OK, packager.Run());
 
   fclose(file_ptr);
 }
@@ -261,7 +262,7 @@ TEST_F(PackagerTest, ReadFromBufferFailed) {
   EXPECT_CALL(mock_read_func, Call(_, _, _)).WillOnce(Return(-1));
 
   Packager packager;
-  ASSERT_EQ(Status::OK,
+  ASSERT_EQ(OK,
             packager.Initialize(packaging_params, SetupStreamDescriptors()));
   ASSERT_EQ(error::FILE_FAILURE, packager.Run().error_code());
 }
