@@ -1,3 +1,8 @@
+## [2.5.2] - 2021-06-16
+
+ - Another test run of the CI system, please ignore
+
+
 ## [2.5.1] - 2021-06-16
 ### Added
  - Add support for MSVS 2017 and 2019 (#867, #955)
@@ -580,6 +585,7 @@ First public release.
 - Added mpd_generator driver program to generate mpd file from packager generated
   intermediate files.
 
+[2.5.2]: https://github.com/google/shaka-packager/compare/v2.5.1...v2.5.2
 [2.5.1]: https://github.com/google/shaka-packager/compare/v2.5.0...v2.5.1
 [2.5.0]: https://github.com/google/shaka-packager/compare/v2.4.3...v2.5.0
 [2.4.3]: https://github.com/google/shaka-packager/compare/v2.4.2...v2.4.3
