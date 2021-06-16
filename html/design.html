@@ -1,34 +1,25 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>Design &#8212; Shaka Packager  documentation</title>
-    <link rel="stylesheet" href="_static/sphinxdoc_new.css" type="text/css" />
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="_static/table_styling.css" type="text/css" />
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    './',
-        VERSION:     '',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true,
-        SOURCELINK_SUFFIX: '.txt'
-      };
-    </script>
-    <script type="text/javascript" src="_static/jquery.js"></script>
-    <script type="text/javascript" src="_static/underscore.js"></script>
-    <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinxdoc_new.css" />
+    <link rel="stylesheet" type="text/css" href="_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="_static/table_styling.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Shaka Packager Library" href="library.html" />
-    <link rel="prev" title="FFmpeg piping" href="tutorials/ffmpeg_piping.html" /> 
-  </head>
-  <body>
+    <link rel="prev" title="HTTP upload" href="tutorials/http_upload.html" /> 
+  </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
@@ -39,58 +30,23 @@
           <a href="library.html" title="Shaka Packager Library"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="tutorials/ffmpeg_piping.html" title="FFmpeg piping"
+          <a href="tutorials/http_upload.html" title="HTTP upload"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">Shaka Packager  documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">Shaka Packager  documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Design</a></li> 
       </ul>
-    </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper">
-  <h3><a href="index.html">Table Of Contents</a></h3>
-  <ul>
-<li><a class="reference internal" href="#">Design</a><ul>
-<li><a class="reference internal" href="#architecture-diagram">Architecture diagram</a></li>
-<li><a class="reference internal" href="#media-handler-data-flow">Media handler data flow</a></li>
-</ul>
-</li>
-</ul>
-
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="tutorials/ffmpeg_piping.html"
-                        title="previous chapter">FFmpeg piping</a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="library.html"
-                        title="next chapter">Shaka Packager Library</a></p>
-  <div role="note" aria-label="source link">
-    <h3>This Page</h3>
-    <ul class="this-page-menu">
-      <li><a href="_sources/design.rst.txt"
-            rel="nofollow">Show Source</a></li>
-    </ul>
-   </div>
-<div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
-    <form class="search" action="search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
-    </form>
-</div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
-        </div>
-      </div>
+    </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="design">
+  <section id="design">
 <h1>Design<a class="headerlink" href="#design" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="architecture-diagram">
+<section id="architecture-diagram">
 <h2>Architecture diagram<a class="headerlink" href="#architecture-diagram" title="Permalink to this headline">¶</a></h2>
-<img src="_images/graphviz-3d064d3d3c78c2f86da25ace49db3e3c4e03a691.png" alt="digraph shaka_packager {
+digraph shaka_packager {
   label=&lt;&lt;u&gt;Shaka Packager Architecture&lt;/u&gt;&gt;
   labelloc=t
 
@@ -132,8 +88,7 @@
     {rank=same; MasterPlaylist, MpdBuilder}
     {rank=same; MediaPlaylist, Representation}
   }
-}" />
-<img src="_images/graphviz-d08592da92fae1a4929d96c1cb6e446e05714101.png" alt="digraph shaka_packager {
+}digraph shaka_packager {
     subgraph cluster_demuxer {
       style=rounded
       label=&lt;&lt;u&gt; &lt;/u&gt;&gt;
@@ -152,8 +107,7 @@
       Muxer2 [label=&quot;Muxer&quot; shape=rectangle]
       Muxer2 -&gt; Mp4Muxer, WebMMuxer, Mp2tMuxer [dir=back arrowtail=onormal]
     }
-}" />
-<img src="_images/graphviz-426ceb00b0739eba2ed2de6d0d71f24a0021c268.png" alt="digraph shaka_packager {
+}digraph shaka_packager {
   subgraph cluster_legend {
     style=rounded
     label=&lt;&lt;u&gt;Legend&lt;/u&gt;&gt;
@@ -172,11 +126,10 @@
     &quot;Manifest Class&quot; [shape=trapezium]
     MediaHandler [shape=rectangle]
   }
-}" />
-</div>
-<div class="section" id="media-handler-data-flow">
+}</section>
+<section id="media-handler-data-flow">
 <h2>Media handler data flow<a class="headerlink" href="#media-handler-data-flow" title="Permalink to this headline">¶</a></h2>
-<img src="_images/graphviz-787838559a989a01982bde69df7d1ba50dba3dae.png" alt="digraph g {
+digraph g {
   rankdir=LR
 
   StreamData [
@@ -188,26 +141,48 @@
   MediaHandler [shape=rectangle]
   MediaHandler2 [shape=rectangle, label=MediaHandler]
   MediaHandler -&gt; StreamData -&gt; MediaHandler2
-}" />
-<p class="plantuml">
-<img src="_images/plantuml-d388f7ab1eb3f4d70c57feb299c189351a097db9.png" alt="MediaHandler -&gt; MediaHandler2 : StreamInfo
-MediaHandler -&gt; MediaHandler2 : MediaSample
-MediaHandler -&gt; MediaHandler2 : MediaSample
-MediaHandler -&gt; MediaHandler2 : ...
-MediaHandler -&gt; MediaHandler2 : MediaSample
-MediaHandler -&gt; MediaHandler2 : SegmentInfo
-MediaHandler -&gt; MediaHandler2 : MediaSample
-MediaHandler -&gt; MediaHandler2 : MediaSample
-MediaHandler -&gt; MediaHandler2 : ...
-MediaHandler -&gt; MediaHandler2 : MediaSample
-MediaHandler -&gt; MediaHandler2 : SegmentInfo
-MediaHandler -&gt; MediaHandler2 : ..." />
-</p>
-</div>
-</div>
+}</section>
+</section>
 
 
+            <div class="clearer"></div>
           </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Design</a><ul>
+<li><a class="reference internal" href="#architecture-diagram">Architecture diagram</a></li>
+<li><a class="reference internal" href="#media-handler-data-flow">Media handler data flow</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="tutorials/http_upload.html"
+                        title="previous chapter">HTTP upload</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="library.html"
+                        title="next chapter">Shaka Packager Library</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/design.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -222,14 +197,15 @@ MediaHandler -&gt; MediaHandler2 : ..." />
           <a href="library.html" title="Shaka Packager Library"
              >next</a> |</li>
         <li class="right" >
-          <a href="tutorials/ffmpeg_piping.html" title="FFmpeg piping"
+          <a href="tutorials/http_upload.html" title="HTTP upload"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">Shaka Packager  documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">Shaka Packager  documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Design</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2017, Google.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.7.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.0.2.
     </div>
   </body>
 </html>

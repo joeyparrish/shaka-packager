@@ -1,34 +1,25 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>Ad Insertion &#8212; Shaka Packager  documentation</title>
-    <link rel="stylesheet" href="../_static/sphinxdoc_new.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/table_styling.css" type="text/css" />
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../',
-        VERSION:     '',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true,
-        SOURCELINK_SUFFIX: '.txt'
-      };
-    </script>
-    <script type="text/javascript" src="../_static/jquery.js"></script>
-    <script type="text/javascript" src="../_static/underscore.js"></script>
-    <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinxdoc_new.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/table_styling.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="FFmpeg piping" href="ffmpeg_piping.html" />
-    <link rel="prev" title="Using Raw Key" href="raw_key.html" /> 
-  </head>
-  <body>
+    <link rel="prev" title="Text output formats" href="text.html" /> 
+  </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
@@ -39,80 +30,41 @@
           <a href="ffmpeg_piping.html" title="FFmpeg piping"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="raw_key.html" title="Using Raw Key"
+          <a href="text.html" title="Text output formats"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Shaka Packager  documentation</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="tutorials.html" accesskey="U">Tutorials</a> &#187;</li> 
+          <li class="nav-item nav-item-1"><a href="tutorials.html" accesskey="U">Tutorials</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Ad Insertion</a></li> 
       </ul>
-    </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper">
-  <h3><a href="../index.html">Table Of Contents</a></h3>
-  <ul>
-<li><a class="reference internal" href="#">Ad Insertion</a><ul>
-<li><a class="reference internal" href="#synopsis">Synopsis</a></li>
-<li><a class="reference internal" href="#examples">Examples</a></li>
-<li><a class="reference internal" href="#configuration-options">Configuration options</a><ul>
-<li><a class="reference internal" href="#ads-options">Ads options</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="raw_key.html"
-                        title="previous chapter">Using Raw Key</a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="ffmpeg_piping.html"
-                        title="next chapter">FFmpeg piping</a></p>
-  <div role="note" aria-label="source link">
-    <h3>This Page</h3>
-    <ul class="this-page-menu">
-      <li><a href="../_sources/tutorials/ads.rst.txt"
-            rel="nofollow">Show Source</a></li>
-    </ul>
-   </div>
-<div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
-    <form class="search" action="../search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
-    </form>
-</div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
-        </div>
-      </div>
+    </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="ad-insertion">
+  <section id="ad-insertion">
 <h1>Ad Insertion<a class="headerlink" href="#ad-insertion" title="Permalink to this headline">¶</a></h1>
 <p>Shaka Packager does not do Ad Insertion directly, but it can precondition
 content for <a class="reference external" href="http://bit.ly/2KK10DD">Dynamic Ad Insertion</a> with Google Ad
 Manager.</p>
 <p>Both DASH and HLS are supported.</p>
-<div class="section" id="synopsis">
+<section id="synopsis">
 <h2>Synopsis<a class="headerlink" href="#synopsis" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default"><div class="highlight"><pre><span></span>$ packager &lt;stream_descriptor&gt; ... \
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ packager &lt;stream_descriptor&gt; ... \
   --ad_cues &lt;start_time[;start_time]...&gt; \
   [Other options, e.g. DRM options, DASH options, HLS options]
 </pre></div>
 </div>
-</div>
-<div class="section" id="examples">
+</section>
+<section id="examples">
 <h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
 <p>The examples below use the H264 streams created in <a class="reference internal" href="encoding.html"><span class="doc">Media Encoding</span></a>.</p>
 <p>Three midroll cue markers are inserted at 10 minutes, 30 minutes and 50 minutes
 respectively.</p>
 <ul>
-<li><p class="first">DASH with live profile:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>$ packager \
+<li><p>DASH with live profile:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ packager \
   &#39;in=h264_baseline_360p_600.mp4,stream=audio,init_segment=audio/init.mp4,segment_template=audio/$Number$.m4s&#39; \
   &#39;in=input_text.vtt,stream=text,init_segment=text/init.mp4,segment_template=text/$Number$.m4s&#39; \
   &#39;in=h264_baseline_360p_600.mp4,stream=video,init_segment=h264_360p/init.mp4,segment_template=h264_360p/$Number$.m4s&#39; \
@@ -120,12 +72,12 @@ respectively.</p>
   &#39;in=h264_main_720p_3000.mp4,stream=video,init_segment=h264_720p/init.mp4,segment_template=h264_720p/$Number$.m4s&#39; \
   &#39;in=h264_high_1080p_6000.mp4,stream=video,init_segment=h264_1080p/init.mp4,segment_template=h264_1080p/$Number$.m4s&#39; \
   --ad_cues 600;1800;3000 \
-  --generate_static_mpd --mpd_output h264.mpd
+  --generate_static_live_mpd --mpd_output h264.mpd
 </pre></div>
 </div>
 </li>
-<li><p class="first">DASH with on-demand profile:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>$ packager \
+<li><p>DASH with on-demand profile:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ packager \
   in=h264_baseline_360p_600.mp4,stream=audio,output=audio.mp4 \
   in=input_text.vtt,stream=text,output=output_text.mp4 \
   in=h264_baseline_360p_600.mp4,stream=video,output=h264_360p.mp4 \
@@ -143,8 +95,8 @@ periods. There may be problems handling this type of DASH contents in some
 players, although it is recommended by <a class="reference external" href="http://bit.ly/2B0HL9q">DASH IF IOP</a>.
 Use the below option if your player does not like it.</p>
 <ul>
-<li><p class="first">DASH with on-demand profile but one file per Period:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>$ packager \
+<li><p>DASH with on-demand profile but one file per Period:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ packager \
   &#39;in=h264_baseline_360p_600.mp4,stream=audio,output=audio_$Number$.mp4&#39; \
   &#39;in=input_text.vtt,stream=text,output=output_text_$Number$.mp4&#39; \
   &#39;in=h264_baseline_360p_600.mp4,stream=video,output=h264_360p_$Number$.mp4&#39; \
@@ -156,8 +108,8 @@ Use the below option if your player does not like it.</p>
 </pre></div>
 </div>
 </li>
-<li><p class="first">HLS using transport streams:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>$ packager \
+<li><p>HLS using transport streams:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ packager \
   &#39;in=h264_baseline_360p_600.mp4,stream=audio,segment_template=audio_$Number$.aac&#39; \
   &#39;in=input_text.vtt,stream=text,segment_template=output_text_$Number$.vtt&#39; \
   &#39;in=h264_baseline_360p_600.mp4,stream=video,segment_template=h264_360p_$Number$.ts&#39; \
@@ -170,19 +122,14 @@ Use the below option if your player does not like it.</p>
 </div>
 </li>
 </ul>
-</div>
-<div class="section" id="configuration-options">
+</section>
+<section id="configuration-options">
 <h2>Configuration options<a class="headerlink" href="#configuration-options" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="ads-options">
+<section id="ads-options">
 <h3>Ads options<a class="headerlink" href="#ads-options" title="Permalink to this headline">¶</a></h3>
-<table class="docutils option-list" frame="void" rules="none">
-<col class="option" />
-<col class="description" />
-<tbody valign="top">
-<tr><td class="option-group" colspan="2">
-<kbd><span class="option">--ad_cues <var>&lt;start_time[;start_time]…&gt;</var></span></kbd></td>
-</tr>
-<tr><td>&#160;</td><td>List of cuepoint markers separated by semicolon. The start_time represents
+<dl class="option-list">
+<dt><kbd><span class="option">--ad_cues <var>&lt;start_time[;start_time]…&gt;</var></span></kbd></dt>
+<dd><p>List of cuepoint markers separated by semicolon. The start_time represents
 the start of the cue marker in seconds (double precision) relative to the
 start of the program. This flag preconditions content for
 <a class="reference external" href="http://bit.ly/2KK10DD">Dynamic Ad Insertion</a> with Google Ad Manager.
@@ -190,15 +137,56 @@ For DASH, multiple periods will be generated with period boundaries at the
 next key frame to the designated start times; For HLS, segments will be
 terminated at the next key frame to the designated start times and
 ‘#EXT-X-PLACEMENT-OPPORTUNITY’ tag will be inserted after the segment in
-media playlist.</td></tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
+media playlist.</p>
+</dd>
+</dl>
+</section>
+</section>
+</section>
 
 
+            <div class="clearer"></div>
           </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Ad Insertion</a><ul>
+<li><a class="reference internal" href="#synopsis">Synopsis</a></li>
+<li><a class="reference internal" href="#examples">Examples</a></li>
+<li><a class="reference internal" href="#configuration-options">Configuration options</a><ul>
+<li><a class="reference internal" href="#ads-options">Ads options</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="text.html"
+                        title="previous chapter">Text output formats</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="ffmpeg_piping.html"
+                        title="next chapter">FFmpeg piping</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/tutorials/ads.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -213,15 +201,16 @@ media playlist.</td></tr>
           <a href="ffmpeg_piping.html" title="FFmpeg piping"
              >next</a> |</li>
         <li class="right" >
-          <a href="raw_key.html" title="Using Raw Key"
+          <a href="text.html" title="Text output formats"
              >previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Shaka Packager  documentation</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="tutorials.html" >Tutorials</a> &#187;</li> 
+          <li class="nav-item nav-item-1"><a href="tutorials.html" >Tutorials</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Ad Insertion</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2017, Google.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.7.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.0.2.
     </div>
   </body>
 </html>

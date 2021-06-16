@@ -1,41 +1,88 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>General encryption options &#8212; Shaka Packager  documentation</title>
-    <link rel="stylesheet" href="../_static/sphinxdoc_new.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/table_styling.css" type="text/css" />
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../',
-        VERSION:     '',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true,
-        SOURCELINK_SUFFIX: '.txt'
-      };
-    </script>
-    <script type="text/javascript" src="../_static/jquery.js"></script>
-    <script type="text/javascript" src="../_static/underscore.js"></script>
-    <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinxdoc_new.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/table_styling.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" /> 
-  </head>
-  <body>
+  </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Shaka Packager  documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">Shaka Packager  documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">General encryption options</a></li> 
       </ul>
-    </div>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="general-encryption-options">
+<h1>General encryption options<a class="headerlink" href="#general-encryption-options" title="Permalink to this headline">¶</a></h1>
+<dl class="option-list">
+<dt><kbd><span class="option">--protection_scheme <var>&lt;scheme&gt;</var></span></kbd></dt>
+<dd><p>Specify a protection scheme, ‘cenc’ or ‘cbc1’ or pattern-based protection
+schemes ‘cens’ or ‘cbcs’.</p>
+</dd>
+<dt><kbd><span class="option">--crypt_byte_block</span></kbd></dt>
+<dd><p>Specify the count of the encrypted blocks in the protection pattern, where
+block is of size 16-bytes.</p>
+<p>There are three common patterns (crypt_byte_block:skip_byte_block):
+1:9 (default), 5:5, 10:0.</p>
+<p>Apply to video streams with ‘cbcs’ and ‘cens’ protection schemes only;
+ignored otherwise.</p>
+</dd>
+<dt><kbd><span class="option">--skip_byte_block</span></kbd></dt>
+<dd><p>Specify the count of the unencrypted blocks in the protection pattern.</p>
+<p>Apply to video streams with ‘cbcs’ and ‘cens’ protection schemes only;
+ignored otherwise.</p>
+</dd>
+<dt><kbd><span class="option">--vp9_subsample_encryption</span>, <span class="option">--novp9_subsample_encryption</span></kbd></dt>
+<dd><p>Enable / disable VP9 subsample encryption. Enabled by default.</p>
+</dd>
+<dt><kbd><span class="option">--clear_lead <var>&lt;seconds&gt;</var></span></kbd></dt>
+<dd><p>Clear lead in seconds if encryption is enabled.
+Shaka Packager does not support partial encrypted segments, all the
+segments including the partial segment overlapping with the initial
+‘clear_lead’ seconds are not encrypted, with all the following segments
+encrypted. If segment_duration is greater than ‘clear_lead’, then only the
+first segment is not encrypted.
+Default: 5</p>
+</dd>
+<dt><kbd><span class="option">--protection_systems</span></kbd></dt>
+<dd><p>Protection systems to be generated. Supported protection systems include
+Widevine, PlayReady, FairPlay, Marlin, and
+<a class="reference external" href="https://goo.gl/s8RIhr">CommonSystem</a>.</p>
+</dd>
+<dt><kbd><span class="option">--playready_extra_header_data <var>&lt;string&gt;</var></span></kbd></dt>
+<dd><p>Extra XML data to add to PlayReady PSSH data.  Can be specified even if
+using another key source.</p>
+</dd>
+</dl>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
   <div role="note" aria-label="source link">
@@ -46,53 +93,15 @@
     </ul>
    </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
     </form>
+    </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
-        </div>
-      </div>
-
-    <div class="document">
-      <div class="documentwrapper">
-        <div class="bodywrapper">
-          <div class="body" role="main">
-            
-  <div class="section" id="general-encryption-options">
-<h1>General encryption options<a class="headerlink" href="#general-encryption-options" title="Permalink to this headline">¶</a></h1>
-<table class="docutils option-list" frame="void" rules="none">
-<col class="option" />
-<col class="description" />
-<tbody valign="top">
-<tr><td class="option-group" colspan="2">
-<kbd><span class="option">--protection_scheme <var>&lt;scheme&gt;</var></span></kbd></td>
-</tr>
-<tr><td>&#160;</td><td>Specify a protection scheme, ‘cenc’ or ‘cbc1’ or pattern-based protection
-schemes ‘cens’ or ‘cbcs’.</td></tr>
-<tr><td class="option-group" colspan="2">
-<kbd><span class="option">--vp9_subsample_encryption</span>, <span class="option">--novp9_subsample_encryption</span></kbd></td>
-</tr>
-<tr><td>&#160;</td><td>Enable / disable VP9 subsample encryption. Enabled by default.</td></tr>
-<tr><td class="option-group" colspan="2">
-<kbd><span class="option">--clear_lead <var>&lt;seconds&gt;</var></span></kbd></td>
-</tr>
-<tr><td>&#160;</td><td>Clear lead in seconds if encryption is enabled.</td></tr>
-<tr><td class="option-group" colspan="2">
-<kbd><span class="option">--protection_systems</span></kbd></td>
-</tr>
-<tr><td>&#160;</td><td>Protection systems to be generated. Supported protection systems include
-Widevine, PlayReady, FairPlay, and CommonSystem (<a class="reference external" href="https://goo.gl/s8RIhr">https://goo.gl/s8RIhr</a>).</td></tr>
-</tbody>
-</table>
-</div>
-
-
-          </div>
+<script>$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -103,12 +112,13 @@ Widevine, PlayReady, FairPlay, and CommonSystem (<a class="reference external" h
         <li class="right" style="margin-right: 10px">
           <a href="../genindex.html" title="General Index"
              >index</a></li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Shaka Packager  documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">Shaka Packager  documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">General encryption options</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2017, Google.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.7.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.0.2.
     </div>
   </body>
 </html>
