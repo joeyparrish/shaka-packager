@@ -1,3 +1,23 @@
+## [2.5.24] - 2021-06-16
+
+- Another test run of the CI system, please ignore
+
+## [2.5.1] - 2021-06-16
+### Added
+ - Add support for MSVS 2017 and 2019 (#867, #955)
+
+### Fixed
+ - Fix broken Dockerfile due to depot_tools update
+ - Fix doc formatting for dash_only and hls_only (#954)
+ - Fix shared_library builds on Windows (#318, #956, #957, #958)
+
+### Changed
+ - Release automation changes (#336, #959)
+   - Migrated Appveyor and Travis integrations to GitHub Actions
+   - Added significant new release automation to build, test, and release on
+     GitHub, NPM, and Docker Hub
+
+
 ## [2.5.0] - 2021-06-09
 ### Added
 - Support HTTP PUT to upload packaging outputs to cloud (#149).
@@ -564,6 +584,8 @@ First public release.
 - Added mpd_generator driver program to generate mpd file from packager generated
   intermediate files.
 
+[2.5.2]: https://github.com/google/shaka-packager/compare/v2.5.1...v2.5.2
+[2.5.1]: https://github.com/google/shaka-packager/compare/v2.5.0...v2.5.1
 [2.5.0]: https://github.com/google/shaka-packager/compare/v2.4.3...v2.5.0
 [2.4.3]: https://github.com/google/shaka-packager/compare/v2.4.2...v2.4.3
 [2.4.2]: https://github.com/google/shaka-packager/compare/v2.4.1...v2.4.2
