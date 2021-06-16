@@ -49,3 +49,5 @@ jobs:
           token: ${{ secrets.NPM_CI_TOKEN }}
           package: src/npm/package.json
           check-version: false
+          access: public  # FIXME
+          # FIXME: fix package.json name

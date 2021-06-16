@@ -44,4 +44,6 @@ jobs:
         with:
           push: true
           context: src/
-          tags: google/shaka-packager:latest,google/shaka-packager:${{ env.TARGET_REF }}
+          # FIXME: revert to real name
+          #tags: google/shaka-packager:latest,google/shaka-packager:${{ env.TARGET_REF }}
+          tags: edashpackager/shaka-packager-ci-test:latest,edashpackager/shaka-packager-ci-test:${{ env.TARGET_REF }}
