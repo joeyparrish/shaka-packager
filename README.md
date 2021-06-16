@@ -8,6 +8,7 @@
 
 ![Shaka Packager](https://raw.githubusercontent.com/google/shaka-packager/master/docs/shaka-packager.png)
 
+
 [![Build Status](https://travis-ci.org/google/shaka-packager.svg?branch=master)](https://travis-ci.org/google/shaka-packager)
 [![Build status](https://ci.appveyor.com/api/projects/status/3t8iu603rp25sa74?svg=true)](https://ci.appveyor.com/project/shaka/shaka-packager)
 
