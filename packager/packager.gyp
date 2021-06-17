@@ -187,6 +187,7 @@
         'status.cc',
         'status.h',
         'status_macros.h',
+        'break_build.cc',
       ],
       'dependencies': [
         'base/base.gyp:base',
