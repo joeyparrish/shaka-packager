@@ -1,0 +1,83 @@
+name: Build Shaka Packager
+
+description: |
+  A reusable action to build Shaka Packager.
+  Leaves build artifacts in the "artifacts" folder.
+
+inputs:
+  os_name:
+    description: The name of the OS (one word).  Appended to artifact filenames.
+    required: true
+  lib_type:
+    description: A library type, either "static" or "shared".
+    required: true
+  build_type:
+    description: A build type, either "Debug" or "Release".
+    required: true
+  build_type_suffix: A suffix to append to the build type in the output path.
+    required: false
+    default: ""
+  exe_ext:
+    description: The extension on executable files.
+    required: false
+    default: ""
+
+env:
+  MACOSX_DEPLOYMENT_TARGET: "10.10"
+  GYP_DEFINES: "target_arch=x64 libpackager_type=${{ inputs.lib_type }}_library"
+  DEPOT_TOOLS_WIN_TOOLCHAIN: "0"
+  GYP_MSVS_VERSION: "2019"
+  GYP_MSVS_OVERRIDE_PATH: "C:/Program Files (x86)/Microsoft Visual Studio/2019/Enterprise"
+
+runs:
+  using: composite
+  steps:
+    - name: Select Xcode 10.3 and SDK 10.14 (macOS only)
+      if: runner.os == 'macOS'
+      # NOTE: macOS 11 doesn't work with our (old) version of Chromium build,
+      # and the latest Chromium build doesn't work with Packager's build
+      # system.  To work around this, we need an older SDK version, and to
+      # get that, we need an older XCode version.  XCode 10.3 has SDK 10.14,
+      # which works.
+      shell: bash
+      run: sudo xcode-select -s 10.3
+
+    - name: Install depot tools
+      shell: bash
+      run: |
+        git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git
+        echo "${GITHUB_WORKSPACE}/depot_tools" >> $GITHUB_PATH
+
+    - name: Configure gclient
+      shell: bash
+      run: |
+        gclient config https://github.com/google/shaka-packager.git --name=src --unmanaged
+
+    - name: Sync gclient
+      shell: bash
+      run: gclient sync
+
+    - name: Build
+      shell: bash
+      run: |
+        ninja -C src/out/${{ inputs.build_type }}${{ inputs.build_type_suffix }}
+
+    - name: Prepare artifacts (static release only)
+      if: inputs.build_type == 'Release' && inputs.lib_type == 'static'
+      shell: bash
+      run: |
+        set -x  # Log individual commands as they are run
+        mkdir artifacts
+        ARTIFACTS="$GITHUB_WORKSPACE/artifacts"
+        cd src/out/Release${{ inputs.build_type_suffix }}
+        mv packager${{ inputs.exe_ext }} \
+            $ARTIFACTS/packager-${{ inputs.os_name }}${{ inputs.exe_ext }}
+        mv mpd_generator${{ inputs.exe_ext }} \
+            $ARTIFACTS/mpd_generator-${{ inputs.os_name }}${{ inputs.exe_ext }}
+        if [[ '${{ runner.os }}' == 'Windows' ]]; then
+          7z a $ARTIFACTS/pssh-box-${{ inputs.os_name }}.py.zip \
+              pyproto pssh-box.py
+        else
+          tar -czf $ARTIFACTS/pssh-box-${{ inputs.os_name }}.py.tar.gz \
+              pyproto pssh-box.py
+        fi
