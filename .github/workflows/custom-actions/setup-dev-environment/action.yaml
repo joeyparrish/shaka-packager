@@ -1,0 +1,31 @@
+name: Setup Shaka Packager Dev Environment
+
+description: |
+  A reusable action to setup the Shaka Packager dev environment.
+  Should be run before checking out the source.
+
+runs:
+  using: composite
+  steps:
+    - name: Install depot tools
+      # NOTE: can't use actions/checkout here because this is not hosted on
+      # GitHub.
+      run: |
+        git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git
+        echo "${GITHUB_WORKSPACE}/depot_tools" >> $GITHUB_PATH
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 2.7
+
+    - name: Install macOS SDK 10.3 (macOS only)
+      if: runner.os == 'macOS'
+      # NOTE: macOS 11 doesn't work with our (old) version of Chromium build,
+      # and the latest Chromium build doesn't work with Packager's build
+      # system.  To work around this, we need an older SDK version, and to
+      # get that, we need an older XCode version.  XCode 10.3 has SDK 10.14,
+      # which works.
+      uses: maxim-lobanov/setup-xcode@v1
+      with:
+        xcode-version: 10.3
