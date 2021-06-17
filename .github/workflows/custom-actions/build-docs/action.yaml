@@ -1,0 +1,38 @@
+name: Build Shaka Packager Docs
+
+description: |
+  A reusable action to build Shaka Packager docs.
+  Leaves docs output in the "gh-pages" folder.
+  Only runs in Linux due to the dependency on doxygen, which we install with
+  apt.
+
+runs:
+  using: composite
+  steps:
+    - name: Install dependencies
+      shell: bash
+      run: |
+        sudo apt install -y doxygen
+        python3 -m pip install \
+            wheel \
+            sphinxcontrib.plantuml \
+            recommonmark \
+            cloud_sptheme \
+            breathe
+
+    - name: Generate docs
+      shell: bash
+      run: |
+        set -x
+        mkdir -p gh-pages
+        cd src
+        mkdir -p out
+        # Doxygen must run before Sphinx.  Sphinx will refer to
+        # Doxygen-generated output when it builds its own docs.
+        doxygen docs/Doxyfile
+        # Now build the Sphinx-based docs.
+        make -C docs/ html
+        # Now move the generated outputs.
+        mv out/sphinx/html ../gh-pages/html
+        mv out/doxygen/html ../gh-pages/docs
+        cp docs/index.html ../gh-pages/index.html
