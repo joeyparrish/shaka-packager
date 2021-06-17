@@ -102,6 +102,7 @@ class PackagerTest : public ::testing::Test {
 };
 
 TEST_F(PackagerTest, Version) {
+  EXPECT_FALSE(true);
   EXPECT_FALSE(Packager::GetLibraryVersion().empty());
 }
 
