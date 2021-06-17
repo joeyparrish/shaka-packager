@@ -1,37 +1,6 @@
-## [2.5.8] - 2021-06-16
+## [2.5.9] - 2021-06-16
 
 - Another test run of the CI system, please ignore
-
-
-## [2.5.7] - 2021-06-16
-
-- Another test run of the CI system, please ignore
-
-
-## [2.5.6] - 2021-06-16
-
-- Another test run of the CI system, please ignore
-
-
-## [2.5.5] - 2021-06-16
-
-- Another test run of the CI system, please ignore
-
-
-## [2.5.4] - 2021-06-16
-
-- Another test run of the CI system, please ignore
-
-
-## [2.5.3] - 2021-06-16
-
-- Another test run of the CI system, please ignore
-
-
-## [2.5.2] - 2021-06-16
-
- - Another test run of the CI system, please ignore
-
 
 ## [2.5.1] - 2021-06-16
 ### Added
