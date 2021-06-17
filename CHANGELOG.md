@@ -1,4 +1,4 @@
-## [2.5.10] - 2021-06-16
+## [2.5.11] - 2021-06-16
 
 - Another test run of the CI system, please ignore
 
