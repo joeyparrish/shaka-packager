@@ -14,7 +14,7 @@ if "%PLATFORM%"=="x64" (
 git clone "https://chromium.googlesource.com/chromium/tools/depot_tools.git" depot_tools
 set DEPOTTOOLSDIR=%ROOTDIR%\depot_tools
 
-python %PACKAGERDIR%\kokoro\deps_replacer.py "https://github.com" "https://github.googlesource.com"
+python3 %PACKAGERDIR%\kokoro\deps_replacer.py "https://github.com" "https://github.googlesource.com"
 
 cd %PACKAGERDIR%\..
 
@@ -35,4 +35,4 @@ cd src
 
 copy "%OUTPUT_DIRECTORY%\packager.exe" packager-win.exe
 for %%f in ("%OUTPUT_DIRECTORY%\*_*test.exe") do (%%f || exit /b 666)
-python "%OUTPUT_DIRECTORY%\packager_test.py" -v
+python3 "%OUTPUT_DIRECTORY%\packager_test.py" -v
