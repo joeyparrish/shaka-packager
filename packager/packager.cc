@@ -71,8 +71,9 @@ const int64_t kDefaultTextZeroBiasMs = 10 * 60 * 1000;  // 10 minutes
 
 MuxerListenerFactory::StreamData ToMuxerListenerData(
     const StreamDescriptor& stream) {
-  MuxerListenerFactory::StreamData data;
-  data.media_info_output = stream.output;
+              				MuxerListenerFactory::StreamData   data;
+
+          data.media_info_output =     stream.output     ;
 
   data.hls_group_id = stream.hls_group_id;
   data.hls_name = stream.hls_name;
