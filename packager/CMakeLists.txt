@@ -13,8 +13,13 @@ endif()
 
 # Global C++ flags.
 if(MSVC)
-  # Warning level 4 and all warnings as errors.
-  add_compile_options(/W4 /WX)
+  if("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
+    # This option is normally included in parallel MSCV builds, but using
+    # sccache may cause it not to be added automatically.  Without it, parallel
+    # compilation in a module may clobber a pdb file.
+    add_compile_options(/FS)
+  endif()
+
   # Silence a warning from an absl header about alignment in boolean flags.
   add_compile_options(/wd4324)
   # Silence a warning about STL types in exported classes.
@@ -44,13 +49,21 @@ endif()
 # Include our module for building protos.
 include("protobuf.cmake")
 
+# Third-party dependencies.
+add_subdirectory(third_party)
+
+# Flags for first-party code only.
+if(MSVC)
+  # Warning level 4 and all warnings as errors.
+  add_compile_options(/W4 /WX)
+endif()
+
 # Subdirectories with their own CMakeLists.txt, all of whose targets are built.
 add_subdirectory(file)
 add_subdirectory(kv_pairs)
 add_subdirectory(media)
 add_subdirectory(mpd)
 add_subdirectory(status)
-add_subdirectory(third_party)
 add_subdirectory(tools)
 add_subdirectory(utils)
 add_subdirectory(version)

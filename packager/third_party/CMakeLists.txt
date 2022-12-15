@@ -20,9 +20,8 @@ set(BUILD_SHARED_LIBS OFF)
 set(CMAKE_POLICY_DEFAULT_CMP0077 NEW)
 
 if(MSVC)
-  # Use warning level 3 in third-party code, as opposed to level 4 used in our
-  # own code.
-  add_compile_options(/W3)
+  # Warning level 3 and all warnings as errors. (First-party code uses level 4.)
+  add_compile_options(/W3 /WX)
 endif()
 
 # These all use EXCLUDE_FROM_ALL so that only the referenced targets get built.

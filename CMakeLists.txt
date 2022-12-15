@@ -14,6 +14,9 @@ project(shaka-packager VERSION "")
 # We could require as low as 3.10, but glog requires 3.16.
 cmake_minimum_required(VERSION 3.16)
 
+# Do not set default warning levels for MSVC.  We will choose the warning level.
+cmake_policy(SET CMP0092 NEW)
+
 # The only build option for Shaka Packager is whether to build a shared
 # libpackager library.  By default, don't.
 option(LIBPACKAGER_SHARED "Build libpackager as a shared library" OFF)
@@ -33,6 +36,17 @@ if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
   if(CMAKE_CXX_COMPILER_VERSION VERSION_LESS 9)
     message(FATAL_ERROR "GCC version must be at least 9! (Found ${CMAKE_CXX_COMPILER_VERSION})")
   endif()
+endif()
+
+# Limit the number of parallel linker jobs, to avoid running out of memory.
+# NOTE: Only affects the Ninja build backend.
+set_property(GLOBAL PROPERTY JOB_POOLS
+             release_link_jobs=4
+             debug_link_jobs=2)
+if("${CMAKE_BUILD_TYPE}" STREQUAL "Release")
+  set(CMAKE_JOB_POOL_LINK release_link_jobs)
+else()
+  set(CMAKE_JOB_POOL_LINK debug_link_jobs)
 endif()
 
 # Global include paths.
