@@ -10,8 +10,9 @@ RUN apk add --no-cache \
 # merged.
 WORKDIR shaka-packager
 COPY . /shaka-packager/
-RUN mkdir build
-RUN cmake -S . -B build
+RUN rm -rf build
+RUN mkdir -p build
+RUN cmake -S . -B build -D CMAKE_BUILD_TYPE=Release
 RUN make -C build
 
 # Copy only result binaries to our final image.

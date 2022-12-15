@@ -35,6 +35,17 @@ if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
   endif()
 endif()
 
+# Limit the number of parallel linker jobs, to avoid running out of memory.
+# NOTE: Only affects the Ninja build backend.
+set_property(GLOBAL PROPERTY JOB_POOLS
+             release_link_jobs=4
+             debug_link_jobs=2)
+if("${CMAKE_BUILD_TYPE}" STREQUAL "Release")
+  set(CMAKE_JOB_POOL_LINK release_link_jobs)
+else()
+  set(CMAKE_JOB_POOL_LINK debug_link_jobs)
+endif()
+
 # Global include paths.
 # Project root, to reference packager/foo/bar/...
 include_directories(.)
