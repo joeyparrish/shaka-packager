@@ -133,6 +133,15 @@ jobs:
         uses: hendrikmuhs/ccache-action@657bab9aeb32eb6d913c2e6882efad4bb7536d94
         with:
           key: ${{ matrix.os_name }}-${{ matrix.target_arch }}-${{ matrix.build_type }}-${{ matrix.lib_type }}
+          # This variant works on Windows with MSVC, but the default does not.
+          variant: "sccache"
+
+      - name: Cache CMake system variables
+        uses: actions/cache@v3
+        # Caching this file speeds up build file generation.
+        with:
+          path: build/CMakeCache.txt
+          key: cmake-cache-${{ matrix.os_name }}-${{ matrix.target_arch }}-${{ matrix.build_type }}-${{ matrix.lib_type }}
 
       - name: Generate build files
         run: |
@@ -146,8 +155,8 @@ jobs:
             -S . \
             -B build/ \
             -G Ninja \
-            -D CMAKE_C_COMPILER_LAUNCHER=ccache \
-            -D CMAKE_CXX_COMPILER_LAUNCHER=ccache \
+            -D CMAKE_C_COMPILER_LAUNCHER=sccache \
+            -D CMAKE_CXX_COMPILER_LAUNCHER=sccache \
             -D CMAKE_BUILD_TYPE="${{ matrix.build_type }}" \
             -D LIBPACKAGER_SHARED="$LIBPACKAGER_SHARED"
 
