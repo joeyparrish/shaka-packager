@@ -104,4 +104,4 @@ target_link_libraries(media_base_unittest
     gtest
     gtest_main
     test_data_util)
-add_test(NAME media_base_unittest COMMAND media_base_unittest)
+add_gtest(media_base_unittest)
