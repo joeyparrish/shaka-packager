@@ -31,13 +31,14 @@ void WriteFile(const std::string& path, const std::string& data) {
 
 void DeleteFile(const std::string& path) {
   std::error_code ec;
-  std::filesystem::remove(path, ec);
+  std::filesystem::remove(std::filesystem::u8path(path), ec);
   // Ignore errors.
 }
 
 int64_t FileSize(const std::string& path) {
   std::error_code ec;
-  int64_t file_size = std::filesystem::file_size(path, ec);
+  int64_t file_size =
+      std::filesystem::file_size(std::filesystem::u8path(path), ec);
   if (ec) {
     return -1;
   }
@@ -231,6 +232,40 @@ TEST_F(LocalFileTest, WriteFlushCheckSize) {
 TEST_F(LocalFileTest, IsLocalRegular) {
   WriteFile(local_file_name_no_prefix_, data_);
   ASSERT_TRUE(File::IsLocalRegularFile(local_file_name_.c_str()));
+}
+
+TEST_F(LocalFileTest, UnicodePath) {
+  // Delete the temp file already created.
+  DeleteFile(local_file_name_no_prefix_);
+
+  // Modify the local file name for this test to include non-ASCII characters.
+  // This is used in TearDown() to clean up the file we create in the test.
+  const std::string unicode_suffix = "από.txt";
+  local_file_name_ += unicode_suffix;
+  local_file_name_no_prefix_ += unicode_suffix;
+
+  // Write file using File API.
+  File* file = File::Open(local_file_name_.c_str(), "w");
+  ASSERT_TRUE(file != NULL);
+  EXPECT_EQ(kDataSize, file->Write(&data_[0], kDataSize));
+  EXPECT_EQ(kDataSize, file->Size());
+  EXPECT_TRUE(file->Close());
+
+  // Read file using File API.
+  file = File::Open(local_file_name_.c_str(), "r");
+  ASSERT_TRUE(file != NULL);
+
+  // Read the entire file.
+  std::string read_data(kDataSize, 0);
+  EXPECT_EQ(kDataSize, file->Read(&read_data[0], kDataSize));
+
+  // Verify EOF.
+  uint8_t single_byte;
+  EXPECT_EQ(0, file->Read(&single_byte, sizeof(single_byte)));
+  EXPECT_TRUE(file->Close());
+
+  // Compare data written and read.
+  EXPECT_EQ(data_, read_data);
 }
 
 class ParamLocalFileTest : public LocalFileTest,
