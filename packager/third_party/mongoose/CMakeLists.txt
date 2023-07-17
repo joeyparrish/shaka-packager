@@ -12,7 +12,7 @@
 
 if(MSVC)
   # Disable integer truncation warnings
-  add_compile_options(/wd4244 /wd4267)
+  #add_compile_options(/wd4244 /wd4267)
 endif()
 
 add_library(mongoose STATIC
