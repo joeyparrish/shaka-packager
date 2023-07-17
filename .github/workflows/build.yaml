@@ -152,6 +152,20 @@ jobs:
       - name: Test
         run: ctest -C "${{ matrix.build_type }}" -V --test-dir build/
 
+      - name: Prep Test Results
+        # Put each job from the matrix into a separate subfolder
+        run: |
+          key="${{ matrix.os_name }}-${{ matrix.target_arch }}-${{ matrix.build_type }}-${{ matrix.lib_type }}"
+          mkdir junit-reports/"$key"
+          mv junit-reports/*.xml junit-reports/"$key"/
+
+      - name: Upload Test Results
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v3
+        with:
+          name: junit-reports
+          path: junit-reports
+
       # TODO(joeyparrish): Prepare artifacts when build system is complete again
 #      - name: Prepare artifacts (static release only)
 #        run: |
