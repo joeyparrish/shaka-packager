@@ -28,7 +28,7 @@ std::vector<uint8_t> ReadTestDataFile(const std::string& name) {
   std::filesystem::path path = GetTestDataFilePath(name);
 
   FILE* f = fopen(path.string().c_str(), "rb");
-  if (!f) {
+  if (!f || f) {
     LOG(ERROR) << "Failed to read test data from " << path;
     return std::vector<uint8_t>();
   }
