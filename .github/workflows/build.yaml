@@ -147,14 +147,25 @@ jobs:
         # Visual Studio on Windows.  Note that the VS generator is what cmake
         # calls a "multi-configuration" generator, and so the desired build
         # type must be specified for Windows.
-        run: cmake --build build/ --config "${{ matrix.build_type }}" --parallel
+        run: |
+          cmake \
+            --build build/ \
+            --config "${{ matrix.build_type }}" \
+            --parallel 2>&1 | tee build-output.txt
+
+      - name: Publish Build Report
+        uses: JacobDomagala/CompileResult@8305ac33ef1148a4c4bbd1c5ad9cb8ade7573d6d
+        if: always()
+        with:
+          comment_title: Build Results
+          compile_result_file: 'build-output.txt'
 
       - name: Test
         run: ctest -C "${{ matrix.build_type }}" -V --test-dir build/
 
       - name: Publish Test Report
         uses: mikepenz/action-junit-report@150e2f992e4fad1379da2056d1d1c279f520e058
-        if: ${{ always() }}
+        if: always()
         with:
           report_paths: 'junit-reports/TEST-*.xml'
 
