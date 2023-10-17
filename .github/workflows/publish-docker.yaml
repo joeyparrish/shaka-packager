@@ -4,20 +4,28 @@
 # license that can be found in the LICENSE file or at
 # https://developers.google.com/open-source/licenses/bsd
 
-name: Docker Hub Release
+# A workflow to publish the official docker image.
+name: Publish to Docker Hub
 
-# Runs when a new release is published on GitHub.
-# Creates a corresponding Docker Hub release and publishes it.
-#
+# Runs when called from another workflow.
 # Can also be run manually for debugging purposes.
 on:
-  release:
-    types: [published]
+  workflow_call:
+    inputs:
+      tag:
+        required: true
+        type: string
+      latest:
+        required: true
+        type: boolean
   # For manual debugging:
   workflow_dispatch:
     inputs:
-      ref:
-        description: "The tag to release to Docker Hub."
+      tag:
+        description: The tag to build from and to push to.
+        required: True
+      latest:
+        description: If true, push to the "latest" tag.
         required: True
 
 jobs:
@@ -25,18 +33,10 @@ jobs:
     name: Publish to Docker Hub
     runs-on: ubuntu-latest
     steps:
-      - name: Compute ref
-        id: ref
-        # We could be building from a workflow dispatch (manual run), or a
-        # release event.  Subsequent steps can refer to $TARGET_REF to
-        # determine the correct ref in all cases.
-        run: |
-          echo "TARGET_REF=${{ github.event.inputs.ref || github.event.release.tag_name }}" >> $GITHUB_ENV
-
       - name: Checkout code
         uses: actions/checkout@v3
         with:
-          ref: ${{ env.TARGET_REF }}
+          ref: ${{ github.event.inputs.tag }}
           submodules: recursive
 
       - name: Log in to Docker Hub
@@ -49,4 +49,11 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          tags: ${{ secrets.DOCKERHUB_PACKAGE_NAME }}:latest,${{ secrets.DOCKERHUB_PACKAGE_NAME }}:${{ env.TARGET_REF }}
+          tags: ${{ secrets.DOCKERHUB_PACKAGE_NAME }}:${{ github.event.inputs.tag }}
+
+      - name: Push to Docker Hub as "latest"
+        if: ${{ github.event.inputs.latest }}
+        uses: docker/build-push-action@v2
+        with:
+          push: true
+          tags: ${{ secrets.DOCKERHUB_PACKAGE_NAME }}:latest

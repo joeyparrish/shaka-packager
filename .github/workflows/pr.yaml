@@ -59,7 +59,7 @@ jobs:
   official_docker_image:
     needs: lint
     name: Official Docker image
-    uses: ./.github/workflows/docker-image.yaml
+    uses: ./.github/workflows/build-docker.yaml
     with:
       ref: ${{ github.event.inputs.ref || github.ref }}
 
