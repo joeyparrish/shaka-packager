@@ -34,4 +34,4 @@ jobs:
 
       - name: Build
         shell: bash
-        run: docker build .
+        run: docker buildx build .
