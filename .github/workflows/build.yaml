@@ -26,12 +26,6 @@ on:
         type: boolean
         default: false
 
-    secrets:
-      # The GITHUB_TOKEN name is reserved, but not passed through implicitly.
-      # So we call our secret parameter simply TOKEN.
-      TOKEN:
-        required: false
-
 # By default, run all commands in a bash shell.  On Windows, the default would
 # otherwise be powershell.
 defaults:
