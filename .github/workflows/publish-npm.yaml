@@ -18,6 +18,11 @@ on:
       latest:
         required: true
         type: boolean
+    secrets:
+      NPM_CI_TOKEN:
+        required: true
+      NPM_PACKAGE_NAME:
+        required: true
   # For manual debugging:
   workflow_dispatch:
     inputs:

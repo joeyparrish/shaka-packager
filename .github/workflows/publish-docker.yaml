@@ -18,6 +18,13 @@ on:
       latest:
         required: true
         type: boolean
+    secrets:
+      DOCKERHUB_CI_USERNAME:
+        required: true
+      DOCKERHUB_CI_TOKEN:
+        required: true
+      DOCKERHUB_PACKAGE_NAME:
+        required: true
   # For manual debugging:
   workflow_dispatch:
     inputs:
