@@ -56,7 +56,8 @@
 
 ## Required Repo Secrets
  - `RELEASE_PLEASE_TOKEN`: A PAT for `shaka-bot` to run the `release-please`
-   action
+   action.  If missing, the release workflow will use the default
+   `GITHUB_TOKEN`
  - `DOCKERHUB_CI_USERNAME`: The username of the Docker Hub CI account
  - `DOCKERHUB_CI_TOKEN`: An access token for Docker Hub
    - To generate, visit https://hub.docker.com/settings/security

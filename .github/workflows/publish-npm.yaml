@@ -64,14 +64,21 @@ jobs:
           NPM_TAG=$(echo "$GIT_TAG_NAME" | cut -f 1-2 -d .)-latest
           echo "NPM_TAG=$NPM_TAG" >> $GITHUB_ENV
 
+          # Since we also set the package version on-the-fly during publication,
+          # compute that here.  It's the tag without the leading "v".
+          NPM_VERSION=$(echo "$GIT_TAG_NAME" | sed -e 's/^v//')
+          echo "NPM_VERSION=$NPM_VERSION" >> $GITHUB_ENV
+
           # Debug the decisions made here.
           echo "This release: $GIT_TAG_NAME"
           echo "NPM tag: $NPM_TAG"
+          echo "NPM version: $NPM_VERSION"
 
-      - name: Set package name
+      - name: Set package name and version
         run: |
           sed npm/package.json -i \
-              -e 's/"name": ""/"name": "${{ secrets.NPM_PACKAGE_NAME }}"/'
+              -e 's/"name": ""/"name": "${{ secrets.NPM_PACKAGE_NAME }}"/' \
+              -e 's/"version": ""/"version": "$NPM_VERSION"/'
 
       - name: Publish
         env:
@@ -84,6 +91,5 @@ jobs:
 
           # Add the "latest" tag if needed.
           if [[ "${{ github.event.inputs.latest }}" == "true" ]]; then
-            NPM_VERSION=$(npm version --json | jq -r '."shaka-packager"')
             npm dist-tag add "shaka-packager@$NPM_VERSION" latest
           fi
