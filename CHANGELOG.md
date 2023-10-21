@@ -1,6 +1,13 @@
 # Changelog
 
 
+## [3.0.3](https://github.com/joeyparrish/shaka-packager/compare/v3.0.2...v3.0.3) (2023-10-21)
+
+
+### Bug Fixes
+
+* Fix pssh-box install location again, fully ([66c8ad5](https://github.com/joeyparrish/shaka-packager/commit/66c8ad5b9f74ad6bfac379d1c40b16270f54a306))
+
 ## [3.0.2](https://github.com/joeyparrish/shaka-packager/compare/v3.0.1...v3.0.2) (2023-10-21)
 
 
