@@ -1,6 +1,13 @@
 # Changelog
 
 
+## [3.0.4](https://github.com/joeyparrish/shaka-packager/compare/v3.0.3...v3.0.4) (2023-10-21)
+
+
+### Bug Fixes
+
+* Fix artifact path ([a6bf14a](https://github.com/joeyparrish/shaka-packager/commit/a6bf14a431c32815350153f4a72551bdafdd5d9b))
+
 ## [3.0.3](https://github.com/joeyparrish/shaka-packager/compare/v3.0.2...v3.0.3) (2023-10-21)
 
 
