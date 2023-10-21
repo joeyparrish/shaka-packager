@@ -1,6 +1,13 @@
 # Changelog
 
 
+## [3.0.1](https://github.com/joeyparrish/shaka-packager/compare/v3.0.0...v3.0.1) (2023-10-21)
+
+
+### Bug Fixes
+
+* Debug release workflow ([c758217](https://github.com/joeyparrish/shaka-packager/commit/c7582179e93b885b48bcee050888ffb25c38575c))
+
 ## [3.0.0](https://github.com/joeyparrish/shaka-packager/compare/v2.6.0...v3.0.0) (2023-10-21)
 
 
