@@ -1,6 +1,14 @@
 # Changelog
 
 
+## [3.0.2](https://github.com/joeyparrish/shaka-packager/compare/v3.0.1...v3.0.2) (2023-10-21)
+
+
+### Bug Fixes
+
+* Fetch tags before computing latest ([e979cb8](https://github.com/joeyparrish/shaka-packager/commit/e979cb87e52416983a5c6ce5897e92c8f85694b9))
+* Fix pssh-box install location ([c8ab369](https://github.com/joeyparrish/shaka-packager/commit/c8ab36954eaeedf7801523cd52e01e0442fad5ee))
+
 ## [3.0.1](https://github.com/joeyparrish/shaka-packager/compare/v3.0.0...v3.0.1) (2023-10-21)
 
 
