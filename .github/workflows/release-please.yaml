@@ -56,8 +56,6 @@ jobs:
       - name: Compute latest
         id: compute
         run: |
-          set -x
-
           GIT_TAG_NAME=${{ needs.release.outputs.tag_name }}
           RELEASE_TAGS=$(git tag | grep ^v[0-9])
           LATEST_RELEASE=$(echo "$RELEASE_TAGS" | sort --version-sort | tail -1)
