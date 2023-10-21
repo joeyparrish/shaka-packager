@@ -53,13 +53,13 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
+          fetch-tags: true
           persist-credentials: false
 
       - name: Compute latest
         id: compute
         run: |
           set -x
-          set -e
 
           GIT_TAG_NAME=${{ needs.release.outputs.tag_name }}
           RELEASE_TAGS=$(git tag | grep ^v[0-9])
