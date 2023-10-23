@@ -87,7 +87,7 @@ jobs:
     uses: ./.github/workflows/publish-docker.yaml
     with:
       tag: ${{ needs.release.outputs.tag_name }}
-      latest: ${{ needs.compute.outputs.latest }}
+      latest: ${{ needs.compute.outputs.latest == 'true' }}
     secrets:
       DOCKERHUB_CI_USERNAME: ${{ secrets.DOCKERHUB_CI_USERNAME }}
       DOCKERHUB_CI_TOKEN: ${{ secrets.DOCKERHUB_CI_TOKEN }}
@@ -137,7 +137,7 @@ jobs:
     uses: ./.github/workflows/publish-npm.yaml
     with:
       tag: ${{ needs.release.outputs.tag_name }}
-      latest: ${{ needs.compute.outputs.latest }}
+      latest: ${{ needs.compute.outputs.latest == 'true' }}
     secrets:
       NPM_CI_TOKEN: ${{ secrets.NPM_CI_TOKEN }}
       NPM_PACKAGE_NAME: ${{ secrets.NPM_PACKAGE_NAME }}

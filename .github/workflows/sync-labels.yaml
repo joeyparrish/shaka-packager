@@ -8,6 +8,7 @@ on:
       dry_run:
         description: "If true, don't make any actual changes"
         required: false
+        type: boolean
         default: false
   schedule:
     # Run every week on Sunday at 5:42 AM.

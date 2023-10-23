@@ -20,7 +20,8 @@ on:
     inputs:
       ref:
         description: "The ref to build docs from."
-        required: True
+        required: true
+        type: string
 
 jobs:
   build_docs:

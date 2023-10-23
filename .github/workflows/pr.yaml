@@ -19,7 +19,8 @@ on:
     inputs:
       ref:
         description: "The ref to build and test."
-        required: False
+        required: false
+        type: string
 
 # If another instance of this workflow is started for the same PR, cancel the
 # old one.  If a PR is updated and a new test run is started, the old test run

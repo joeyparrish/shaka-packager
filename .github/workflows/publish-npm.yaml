@@ -28,10 +28,12 @@ on:
     inputs:
       tag:
         description: The tag to build from.
-        required: True
+        required: true
+        type: string
       latest:
         description: If true, push to the "latest" tag.
-        required: True
+        required: true
+        type: boolean
 
 jobs:
   publish:
