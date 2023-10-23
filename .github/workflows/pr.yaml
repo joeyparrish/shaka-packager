@@ -26,7 +26,7 @@ on:
 # old one.  If a PR is updated and a new test run is started, the old test run
 # will be cancelled automatically to conserve resources.
 concurrency:
-  group: ${{ github.workflow }}-${{ github.event.inputs.ref || github.ref }}
+  group: ${{ github.workflow }}-${{ inputs.ref || github.ref }}
   cancel-in-progress: true
 
 jobs:
@@ -38,14 +38,14 @@ jobs:
     name: Lint
     uses: ./.github/workflows/lint.yaml
     with:
-      ref: ${{ github.event.inputs.ref || github.ref }}
+      ref: ${{ inputs.ref || github.ref }}
 
   build_and_test:
     needs: [lint, settings]
     name: Build and test
     uses: ./.github/workflows/build.yaml
     with:
-      ref: ${{ github.event.inputs.ref || github.ref }}
+      ref: ${{ inputs.ref || github.ref }}
       self_hosted: ${{ needs.settings.outputs.self_hosted != '' }}
       debug: ${{ needs.settings.outputs.debug != '' }}
 
@@ -54,7 +54,7 @@ jobs:
     name: Build docs
     uses: ./.github/workflows/build-docs.yaml
     with:
-      ref: ${{ github.event.inputs.ref || github.ref }}
+      ref: ${{ inputs.ref || github.ref }}
       debug: ${{ needs.settings.outputs.debug != '' }}
 
   official_docker_image:
@@ -62,7 +62,7 @@ jobs:
     name: Official Docker image
     uses: ./.github/workflows/build-docker.yaml
     with:
-      ref: ${{ github.event.inputs.ref || github.ref }}
+      ref: ${{ inputs.ref || github.ref }}
 
   test_supported_linux_distros:
     # Doesn't really "need" it, but let's not waste time on a series of docker
@@ -71,4 +71,4 @@ jobs:
     name: Test Linux distros
     uses: ./.github/workflows/test-linux-distros.yaml
     with:
-      ref: ${{ github.event.inputs.ref || github.ref }}
+      ref: ${{ inputs.ref || github.ref }}

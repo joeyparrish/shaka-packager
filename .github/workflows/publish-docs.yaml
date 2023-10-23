@@ -28,7 +28,7 @@ jobs:
     name: Build docs
     uses: ./.github/workflows/build-docs.yaml
     with:
-      ref: ${{ github.event.inputs.ref }}
+      ref: ${{ inputs.ref }}
 
   publish_docs:
     name: Publish updated docs

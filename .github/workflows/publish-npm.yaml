@@ -43,7 +43,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
         with:
-          ref: ${{ github.event.inputs.tag }}
+          ref: ${{ inputs.tag }}
           submodules: recursive
 
       - uses: actions/setup-node@v1
@@ -62,7 +62,7 @@ jobs:
           # The explicit tag is based on the branch.  If the git tag is v4.4.1,
           # the branch was v4.4.x, and the explicit NPM tag should be
           # v4.4-latest.
-          GIT_TAG_NAME=${{ github.event.inputs.tag }}
+          GIT_TAG_NAME=${{ inputs.tag }}
           NPM_TAG=$(echo "$GIT_TAG_NAME" | cut -f 1-2 -d .)-latest
           echo "NPM_TAG=$NPM_TAG" >> $GITHUB_ENV
 
@@ -92,6 +92,6 @@ jobs:
           npm publish --tag "$NPM_TAG"
 
           # Add the "latest" tag if needed.
-          if [[ "${{ github.event.inputs.latest }}" == "true" ]]; then
+          if [[ "${{ inputs.latest }}" == "true" ]]; then
             npm dist-tag add "shaka-packager@$NPM_VERSION" latest
           fi
