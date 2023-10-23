@@ -1,6 +1,13 @@
 # Changelog
 
 
+## [3.0.6](https://github.com/joeyparrish/shaka-packager/compare/v3.0.5...v3.0.6) (2023-10-23)
+
+
+### Bug Fixes
+
+* Fix types in workflow parameters ([abb557f](https://github.com/joeyparrish/shaka-packager/commit/abb557faf3ff760127c299e179b3d4320a2cc2d9))
+
 ## [3.0.5](https://github.com/joeyparrish/shaka-packager/compare/v3.0.4...v3.0.5) (2023-10-23)
 
 
