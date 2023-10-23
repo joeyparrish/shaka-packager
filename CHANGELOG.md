@@ -1,6 +1,14 @@
 # Changelog
 
 
+## [3.0.7](https://github.com/joeyparrish/shaka-packager/compare/v3.0.6...v3.0.7) (2023-10-23)
+
+
+### Bug Fixes
+
+* Update artifact debug ([d6b0ee4](https://github.com/joeyparrish/shaka-packager/commit/d6b0ee4f2dae395c0cf4147c7182995e7dd2e783))
+* Use unified inputs context ([134a6a6](https://github.com/joeyparrish/shaka-packager/commit/134a6a621e2075514d7d227c441607d7df1051e5))
+
 ## [3.0.6](https://github.com/joeyparrish/shaka-packager/compare/v3.0.5...v3.0.6) (2023-10-23)
 
 
