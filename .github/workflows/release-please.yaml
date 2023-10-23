@@ -107,13 +107,17 @@ jobs:
     needs: [release, build]
     if: needs.release.outputs.release_created
     steps:
-      - uses: actions/checkout@v3
-        with:
-          persist-credentials: false
+      #- uses: actions/checkout@v3
+      #  with:
+      #    persist-credentials: false
 
       - uses: actions/download-artifact@v3
         with:
           path: artifacts
+
+      - name: Debug
+        run: |
+          find shaka-packager/artifacts/
 
       - name: Attach packager to release
         uses: svenstaro/upload-release-action@v2
