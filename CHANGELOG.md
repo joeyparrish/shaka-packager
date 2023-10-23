@@ -1,6 +1,14 @@
 # Changelog
 
 
+## [3.0.5](https://github.com/joeyparrish/shaka-packager/compare/v3.0.4...v3.0.5) (2023-10-23)
+
+
+### Bug Fixes
+
+* debug artifact job ([0575548](https://github.com/joeyparrish/shaka-packager/commit/057554845320685a86634203714d699227fa7271))
+* Fix artifact path again? ([047e19b](https://github.com/joeyparrish/shaka-packager/commit/047e19bfe1802df0164d2691f2b73cc5745f7ecc))
+
 ## [3.0.4](https://github.com/joeyparrish/shaka-packager/compare/v3.0.3...v3.0.4) (2023-10-21)
 
 
