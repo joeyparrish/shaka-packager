@@ -82,7 +82,7 @@ jobs:
           # both / and @, but | should not appear in package names.
           sed npm/package.json -i \
               -e 's|"name": ""|"name": "${{ secrets.NPM_PACKAGE_NAME }}"|' \
-              -e 's|"version": ""|"version": "$NPM_VERSION"|'
+              -e 's|"version": ""|"version": "${{ env.NPM_VERSION }}"|'
 
       - name: Publish
         env:
