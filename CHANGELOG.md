@@ -1,6 +1,13 @@
 # Changelog
 
 
+## [3.0.8](https://github.com/joeyparrish/shaka-packager/compare/v3.0.7...v3.0.8) (2023-10-24)
+
+
+### Bug Fixes
+
+* Fix artifacts and docker outputs ([807dc7e](https://github.com/joeyparrish/shaka-packager/commit/807dc7e08debc6e4286347a914180ec551a69ebc))
+
 ## [3.0.7](https://github.com/joeyparrish/shaka-packager/compare/v3.0.6...v3.0.7) (2023-10-23)
 
 
