@@ -1,6 +1,13 @@
 # Changelog
 
 
+## [3.0.10](https://github.com/joeyparrish/shaka-packager/compare/v3.0.9...v3.0.10) (2023-10-24)
+
+
+### Bug Fixes
+
+* Fix NPM version sub ([c969505](https://github.com/joeyparrish/shaka-packager/commit/c969505e59f95c6b2c4fd9877fc62d8537b86d00))
+
 ## [3.0.9](https://github.com/joeyparrish/shaka-packager/compare/v3.0.8...v3.0.9) (2023-10-24)
 
 
