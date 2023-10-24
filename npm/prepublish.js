@@ -7,9 +7,9 @@ var spawnSync = require('child_process').spawnSync;
 
 // Command names per-platform:
 var commandNames = {
-  linux: 'packager-linux',
-  darwin: 'packager-osx',
-  win32: 'packager-win.exe',
+  linux: 'packager-linux-x64',
+  darwin: 'packager-osx-x64',
+  win32: 'packager-win-x64.exe',
 };
 
 // Get the current package version:
