@@ -1,6 +1,13 @@
 # Changelog
 
 
+## [3.0.11](https://github.com/joeyparrish/shaka-packager/compare/v3.0.10...v3.0.11) (2023-10-24)
+
+
+### Bug Fixes
+
+* Fix packager binary names for NPM ([c186569](https://github.com/joeyparrish/shaka-packager/commit/c186569ebcfa0c9d1274884a0fad61cde837ef96))
+
 ## [3.0.10](https://github.com/joeyparrish/shaka-packager/compare/v3.0.9...v3.0.10) (2023-10-24)
 
 
