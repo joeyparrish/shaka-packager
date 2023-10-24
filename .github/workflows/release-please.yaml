@@ -121,7 +121,7 @@ jobs:
           tag: ${{ needs.release.outputs.tag_name }}
           make_latest: false  # Already set for the release
           file_glob: true
-          file: shaka-packager/artifacts/artifacts*
+          file: artifacts/artifacts*/*
           overwrite: true
 
   # Surprisingly, Shaka Packager binaries can be installed via npm.

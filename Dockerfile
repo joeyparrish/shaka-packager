@@ -19,11 +19,11 @@ FROM alpine:3.12
 RUN apk add --no-cache libstdc++ python3
 COPY --from=builder /shaka-packager/build/packager/packager \
                     /shaka-packager/build/packager/mpd_generator \
-                    /shaka-packager/build/pssh-box.py \
+                    /shaka-packager/build/packager/pssh-box.py \
                     /usr/bin/
 
 # Copy pyproto directory, which is needed by pssh-box.py script. This line
 # cannot be combined with the line above as Docker's copy command skips the
 # directory itself. See https://github.com/moby/moby/issues/15858 for details.
-COPY --from=builder /shaka-packager/build/pssh-box-protos \
+COPY --from=builder /shaka-packager/build/packager/pssh-box-protos \
                     /usr/bin/pssh-box-protos
