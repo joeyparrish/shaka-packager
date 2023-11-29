@@ -96,5 +96,5 @@ jobs:
 
           # Add the "latest" tag if needed.
           if [[ "${{ inputs.latest }}" == "true" ]]; then
-            npm dist-tag add "shaka-packager@$NPM_VERSION" latest
+            npm dist-tag add "${{ secrets.NPM_PACKAGE_NAME }}@$NPM_VERSION" latest
           fi
