@@ -1,6 +1,14 @@
 # Changelog
 
 
+## [3.0.12](https://github.com/joeyparrish/shaka-packager/compare/v3.0.11...v3.0.12) (2023-11-29)
+
+
+### Bug Fixes
+
+* Not a fix, just triggering the workflow again ([07fe3c2](https://github.com/joeyparrish/shaka-packager/commit/07fe3c22a46a3739678ce42610c1566125412514))
+* Not a fix, just triggering the workflow again ([c6f1ba1](https://github.com/joeyparrish/shaka-packager/commit/c6f1ba1949ef29fcefd3af336ffb0f0929ec314c))
+
 ## [3.0.11](https://github.com/joeyparrish/shaka-packager/compare/v3.0.10...v3.0.11) (2023-10-24)
 
 
