@@ -1,6 +1,14 @@
 # Changelog
 
 
+## [3.0.14](https://github.com/joeyparrish/shaka-packager/compare/v3.0.13...v3.0.14) (2023-11-29)
+
+
+### Bug Fixes
+
+* Upgrade docker actions ([758703b](https://github.com/joeyparrish/shaka-packager/commit/758703bd21b625f706fffda55977f96034296a95))
+* Upgrade npm actions ([8b8817b](https://github.com/joeyparrish/shaka-packager/commit/8b8817bc6cbe27f5330c5ed14d1ae224d971f91e))
+
 ## [3.0.13](https://github.com/joeyparrish/shaka-packager/compare/v3.0.12...v3.0.13) (2023-11-29)
 
 
