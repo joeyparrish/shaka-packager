@@ -1,6 +1,16 @@
 # Changelog
 
 
+## [3.0.13](https://github.com/joeyparrish/shaka-packager/compare/v3.0.12...v3.0.13) (2023-11-29)
+
+
+### Bug Fixes
+
+* Fix docs permissions ([75600f2](https://github.com/joeyparrish/shaka-packager/commit/75600f27b3d9e9a8a664b51eea1c0b5255d162e2))
+* Fix NPM package with (optional) arm64 binaries ([7cedf7d](https://github.com/joeyparrish/shaka-packager/commit/7cedf7df5e9e574ff13732411c78a0684c0e462a))
+* Fix publication of forked package to NPM ([3d7646d](https://github.com/joeyparrish/shaka-packager/commit/3d7646d3afd57f81cc669fddc701b4193d562818))
+* Label release jobs ([7ed3283](https://github.com/joeyparrish/shaka-packager/commit/7ed3283cfa73580e9f7c55b001350b1781443bad))
+
 ## [3.0.12](https://github.com/joeyparrish/shaka-packager/compare/v3.0.11...v3.0.12) (2023-11-29)
 
 
