@@ -73,6 +73,7 @@ jobs:
 
   # Publish docs to GitHub Pages
   docs:
+    name: Update docs
     needs: [release, compute]
     # Only if this is the latest release
     if: needs.release.outputs.release_created && needs.compute.outputs.latest
@@ -82,6 +83,7 @@ jobs:
 
   # Publish official docker image
   docker:
+    name: Update docker image
     needs: [release, compute]
     if: needs.release.outputs.release_created
     uses: ./.github/workflows/publish-docker.yaml
@@ -95,6 +97,7 @@ jobs:
 
   # Do a complete build
   build:
+    name: Build
     needs: release
     if: needs.release.outputs.release_created
     uses: ./.github/workflows/build.yaml
@@ -103,6 +106,7 @@ jobs:
 
   # Attach build artifacts to the release
   artifacts:
+    name: Artifacts
     runs-on: ubuntu-latest
     needs: [release, build]
     if: needs.release.outputs.release_created
@@ -125,8 +129,9 @@ jobs:
           overwrite: true
 
   # Surprisingly, Shaka Packager binaries can be installed via npm.
-  # Publish NPM package
+  # Publish NPM package updates.
   npm:
+    name: Update NPM
     needs: [release, compute, artifacts]
     if: needs.release.outputs.release_created
     uses: ./.github/workflows/publish-npm.yaml
