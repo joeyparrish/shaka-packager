@@ -115,7 +115,7 @@ set(libpackager_deps
 add_library(libpackager_static STATIC ${libpackager_sources})
 target_link_libraries(libpackager_static ${libpackager_deps})
 
-# And always installed as libpackager.a:
+# And always installed as libpackager.a / libpackager.lib:
 if(NOT MSVC)
   set_property(TARGET libpackager_static PROPERTY OUTPUT_NAME packager)
 else()
