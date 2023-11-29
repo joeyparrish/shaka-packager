@@ -91,7 +91,8 @@ jobs:
           cd npm
 
           # Publish with an explicit tag.
-          npm publish --tag "$NPM_TAG"
+          # Also publish with explicit public access, to allow scoped packages.
+          npm publish --tag "$NPM_TAG" --access=public
 
           # Add the "latest" tag if needed.
           if [[ "${{ inputs.latest }}" == "true" ]]; then
