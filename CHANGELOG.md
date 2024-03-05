@@ -1,6 +1,13 @@
 # Changelog
 
 
+## [4.0.1](https://github.com/joeyparrish/shaka-packager/compare/v4.0.0...v4.0.1) (2024-03-05)
+
+
+### Bug Fixes
+
+* test release ([668fad1](https://github.com/joeyparrish/shaka-packager/commit/668fad15e401041687e323082665a7f0e8bc3a6e))
+
 ## [4.0.0](https://github.com/joeyparrish/shaka-packager/compare/v3.0.0...v4.0.0) (2024-03-04)
 
 
