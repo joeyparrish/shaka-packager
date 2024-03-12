@@ -1,6 +1,13 @@
 # Changelog
 
 
+## [3.0.3](https://github.com/joeyparrish/shaka-packager/compare/v3.0.2...v3.0.3) (2024-03-12)
+
+
+### Bug Fixes
+
+* Fix tags in official Docker images and binaries ([73a85ce](https://github.com/joeyparrish/shaka-packager/commit/73a85ce665765c432812c6c9ea43d57e889046be)), closes [#1366](https://github.com/joeyparrish/shaka-packager/issues/1366)
+
 ## [3.0.2](https://github.com/shaka-project/shaka-packager/compare/v3.0.1...v3.0.2) (2024-03-07)
 
 
