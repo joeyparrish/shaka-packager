@@ -1,6 +1,14 @@
 # Changelog
 
 
+## [3.0.4](https://github.com/joeyparrish/shaka-packager/compare/v3.0.3...v3.0.4) (2024-03-12)
+
+
+### Bug Fixes
+
+* Fix docker action config to respect existing checkout/tags ([af341ed](https://github.com/joeyparrish/shaka-packager/commit/af341ed30fa2ffd251033c218615454f709a9a7b))
+* Fix NPM binary publication ([78fdbb4](https://github.com/joeyparrish/shaka-packager/commit/78fdbb4e300697ba0686509ae9f95db33e068183)), closes [#1369](https://github.com/joeyparrish/shaka-packager/issues/1369)
+
 ## [3.0.3](https://github.com/joeyparrish/shaka-packager/compare/v3.0.2...v3.0.3) (2024-03-12)
 
 
