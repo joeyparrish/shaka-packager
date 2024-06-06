@@ -560,7 +560,7 @@ int PackagerMain(int argc, char** argv) {
     return "packager version " + shaka::Packager::GetLibraryVersion() + "\n";
   };
   flag_config.contains_help_flags =
-      [](absl::string_view flag_file_name) -> bool { return true; };
+      [](absl::string_view /*flag_file_name*/) -> bool { return true; };
   absl::SetFlagsUsageConfig(flag_config);
 
   auto usage = absl::StrFormat(kUsage, argv[0]);

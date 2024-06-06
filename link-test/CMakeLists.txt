@@ -7,13 +7,13 @@
 # If we're building a shared library, make sure it works.  We only do this for
 # a shared library because the static library won't wrap the third-party
 # dependencies like absl.
-if(BUILD_SHARED_LIBS)
+#if(BUILD_SHARED_LIBS)
   # Install the library and headers to a temporary location.
   set(TEST_INSTALL_DIR ${CMAKE_BINARY_DIR}/test-install)
 
   # Custom commands aren't targets, but have outputs.
   add_custom_command(
-    DEPENDS mpd_generator packager libpackager pssh_box_py
+    DEPENDS mpd_generator packager libpackager_thin pssh_box_py
     WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
     OUTPUT ${TEST_INSTALL_DIR}
     COMMAND
@@ -42,4 +42,4 @@ if(BUILD_SHARED_LIBS)
   else()
     target_link_libraries(packager_link_test ${TEST_INSTALL_DIR}/lib/libpackager.lib)
   endif()
-endif()
+#endif()

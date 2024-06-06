@@ -66,6 +66,8 @@ include("gtest.cmake")
 # Include our module for building protos.
 include("protobuf.cmake")
 
+include("bundle-static.cmake")
+
 # Find Python3 used by integration tests, license notice and version string
 if(NOT Python3_EXECUTABLE)
   find_package(Python3 COMPONENTS Interpreter REQUIRED)
@@ -119,15 +121,14 @@ set(libpackager_deps
   version
 )
 
-# A static library target is always built.
-
 if(BUILD_SHARED_LIBS)
   add_library(libpackager SHARED ${libpackager_sources})
   target_link_libraries(libpackager ${libpackager_deps})
   target_compile_definitions(libpackager PUBLIC SHAKA_IMPLEMENTATION)
 else()
-  add_library(libpackager STATIC ${libpackager_sources})
-  target_link_libraries(libpackager ${libpackager_deps})
+  add_library(libpackager_thin STATIC ${libpackager_sources})
+  target_link_libraries(libpackager_thin ${libpackager_deps})
+  bundle_static_library(libpackager_thin libpackager)
 endif()
 
 # The library is always installed as
@@ -259,10 +260,10 @@ install(TARGETS mpd_generator packager)
 # With shared libraries, also install the library, headers, and pkgconfig.
 # The static library isn't usable as a standalone because it doesn't include
 # its static dependencies (zlib, absl, etc).
-if(BUILD_SHARED_LIBS)
-  install(TARGETS libpackager)
+#if(BUILD_SHARED_LIBS)
+  install(TARGETS libpackager_thin)
   install(DIRECTORY ../include/packager
     DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
   install(FILES ${CMAKE_CURRENT_BINARY_DIR}/packager.pc
     DESTINATION ${CMAKE_INSTALL_LIBDIR}/pkgconfig)
-endif()
+#endif()
