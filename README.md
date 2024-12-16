@@ -6,6 +6,7 @@
 [comment]: # (See https://github.com/shaka-project/shaka-packager/issues/408 for the  )
 [comment]: # (full background.                                                 )
 
+
 ![Shaka Packager](https://raw.githubusercontent.com/shaka-project/shaka-packager/main/docs/shaka-packager.png)
 
 Shaka Packager is a tool and a media packaging SDK for
