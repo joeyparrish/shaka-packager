@@ -1,6 +1,13 @@
 # Changelog
 
 
+## [3.4.2](https://github.com/joeyparrish/shaka-packager/compare/v3.4.1...v3.4.2) (2025-01-09)
+
+
+### Bug Fixes
+
+* foo ([f2551b8](https://github.com/joeyparrish/shaka-packager/commit/f2551b890fc38750afe404cf2fecfd0cf3f419b8))
+
 ## [3.4.1](https://github.com/shaka-project/shaka-packager/compare/v3.4.0...v3.4.1) (2024-12-20)
 
 
