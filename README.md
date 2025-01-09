@@ -1,4 +1,5 @@
 [comment]: # (While not ideal, absolute URLs are used here as it is the        )
+
 [comment]: # (simplest way to make the links work on GitHub and Docker Hub.    )
 [comment]: # (These links in cloned repositories will point back to the main   )
 [comment]: # (repository and if it is an issue, we suggest updating the links  )
