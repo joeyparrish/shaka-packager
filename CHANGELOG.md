@@ -1,6 +1,13 @@
 # Changelog
 
 
+## [3.4.91](https://github.com/joeyparrish/shaka-packager/compare/v3.4.90...v3.4.91) (2026-02-27)
+
+
+### Bug Fixes
+
+* **ci:** Update macOS build images ([d4d761c](https://github.com/joeyparrish/shaka-packager/commit/d4d761c9eebd0b5ac84ef44d6213880e36786bd3))
+
 ## [3.4.90](https://github.com/joeyparrish/shaka-packager/compare/v3.4.2...v3.4.90) (2026-02-27)
 
 
