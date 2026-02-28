@@ -1,6 +1,13 @@
 # Changelog
 
 
+## [3.4.92](https://github.com/joeyparrish/shaka-packager/compare/v3.4.91...v3.4.92) (2026-02-28)
+
+
+### Bug Fixes
+
+* **ci:** Update actions ([e7a9f58](https://github.com/joeyparrish/shaka-packager/commit/e7a9f58510155952a3623b9c3d3b73612d95adb3))
+
 ## [3.4.91](https://github.com/joeyparrish/shaka-packager/compare/v3.4.90...v3.4.91) (2026-02-27)
 
 
