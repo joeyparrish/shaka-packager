@@ -1,6 +1,14 @@
 # Changelog
 
 
+## [3.4.93](https://github.com/joeyparrish/shaka-packager/compare/v3.4.92...v3.4.93) (2026-03-02)
+
+
+### Bug Fixes
+
+* **ci:** Limit artifact downloads ([86a2be4](https://github.com/joeyparrish/shaka-packager/commit/86a2be487d3488b33b1fe571ba95012d66935b43))
+* **ci:** Limit artifact downloads ([7d5bffd](https://github.com/joeyparrish/shaka-packager/commit/7d5bffd9b6e805f2ad8e4c63620ca618026d0854))
+
 ## [3.4.92](https://github.com/joeyparrish/shaka-packager/compare/v3.4.91...v3.4.92) (2026-02-28)
 
 
