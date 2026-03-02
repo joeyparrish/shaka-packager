@@ -131,6 +131,7 @@ jobs:
     steps:
       - uses: actions/download-artifact@v8
         with:
+          name: artifacts-*
           path: artifacts
           merge-multiple: true
 
