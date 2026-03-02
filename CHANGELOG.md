@@ -1,6 +1,13 @@
 # Changelog
 
 
+## [3.4.94](https://github.com/joeyparrish/shaka-packager/compare/v3.4.93...v3.4.94) (2026-03-02)
+
+
+### Bug Fixes
+
+* **ci:** Fix working directory ([1d7f538](https://github.com/joeyparrish/shaka-packager/commit/1d7f538b240fedf320e3e72b43920f295a289ef6))
+
 ## [3.4.93](https://github.com/joeyparrish/shaka-packager/compare/v3.4.92...v3.4.93) (2026-03-02)
 
 
