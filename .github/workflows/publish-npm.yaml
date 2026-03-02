@@ -91,6 +91,8 @@ jobs:
 
       - name: Set package name, version, and URL
         run: |
+          cd npm
+
           # NOTE: OIDC fails if the repository URL doesn't match package.json.
           npm pkg set repository.url=https://github.com/${{ github.repository }}
           npm pkg set name="${{ secrets.NPM_PACKAGE_NAME }}"
