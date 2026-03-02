@@ -131,7 +131,11 @@ jobs:
     steps:
       - uses: actions/download-artifact@v8
         with:
-          name: artifacts-*
+          # Avoid mixing in other artifacts (used temporarily for docker, etc).
+          # If we get those mixed in, the download may fail with "not a zip" in
+          # the debug logs.  Our binary artifacts all follow the pattern
+          # artifacts-*.
+          pattern: artifacts-*
           path: artifacts
           merge-multiple: true
 
