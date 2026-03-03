@@ -1,6 +1,14 @@
 # Changelog
 
 
+## [3.4.88](https://github.com/joeyparrish/shaka-packager/compare/v3.4.89...v3.4.88) (2026-03-03)
+
+
+### Bug Fixes
+
+* **ci:** Debug release tags and "latest" decision ([24c4af4](https://github.com/joeyparrish/shaka-packager/commit/24c4af4ce3ab41c19958e340d54379476235308c))
+* **ci:** Trigger empty release ([46130e4](https://github.com/joeyparrish/shaka-packager/commit/46130e428675cc1d5156ae63b9b8f0e701b8bc09))
+
 ## [3.4.89](https://github.com/joeyparrish/shaka-packager/compare/v3.4.95...v3.4.89) (2026-03-03)
 
 
