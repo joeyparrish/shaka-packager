@@ -70,7 +70,7 @@ jobs:
           # We only tag the NPM package as "latest" if this release is the
           # highest version to date.
           GIT_TAG_NAME=${{ inputs.tag }}
-          RELEASE_TAGS=$(git tag | grep ^v[0-9] | grep -Ev -- '-(master|main)')
+          RELEASE_TAGS=$(git tag | grep ^v[0-9])
           LATEST_RELEASE=$(echo "$RELEASE_TAGS" | sort --version-sort | tail -1)
 
           NPM_VERSION=$(echo "$GIT_TAG_NAME" | sed -e 's/^v//')
@@ -84,6 +84,8 @@ jobs:
           echo NPM_LATEST=$NPM_LATEST >> $GITHUB_ENV
 
           # Debug the decisions made here.
+          echo "Release tags:"
+          echo "$RELEASE_TAGS" | sed -e 's/^/  /'
           echo "Latest release: $LATEST_RELEASE"
           echo "This release: $GIT_TAG_NAME"
           echo "NPM latest: $NPM_LATEST"
