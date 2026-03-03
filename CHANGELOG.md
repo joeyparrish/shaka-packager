@@ -1,6 +1,13 @@
 # Changelog
 
 
+## [3.4.95](https://github.com/joeyparrish/shaka-packager/compare/v3.4.94...v3.4.95) (2026-03-03)
+
+
+### Bug Fixes
+
+* **ci:** Fix tag name input ([4dd1be8](https://github.com/joeyparrish/shaka-packager/commit/4dd1be8e521718aff18e4c40dfb93e3cda0f464d))
+
 ## [3.4.94](https://github.com/joeyparrish/shaka-packager/compare/v3.4.93...v3.4.94) (2026-03-02)
 
 
