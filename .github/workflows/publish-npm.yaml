@@ -69,7 +69,7 @@ jobs:
 
           # We only tag the NPM package as "latest" if this release is the
           # highest version to date.
-          GIT_TAG_NAME=${{ needs.release.outputs.tag_name }}
+          GIT_TAG_NAME=${{ inputs.tag }}
           RELEASE_TAGS=$(git tag | grep ^v[0-9] | grep -Ev -- '-(master|main)')
           LATEST_RELEASE=$(echo "$RELEASE_TAGS" | sort --version-sort | tail -1)
 
