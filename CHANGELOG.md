@@ -1,6 +1,13 @@
 # Changelog
 
 
+## [3.4.87](https://github.com/joeyparrish/shaka-packager/compare/v3.4.88...v3.4.87) (2026-03-04)
+
+
+### Bug Fixes
+
+* **ci:** Fix tag computations ([3331944](https://github.com/joeyparrish/shaka-packager/commit/33319446d3019228322525243e078b4a42e36bdc))
+
 ## [3.4.88](https://github.com/joeyparrish/shaka-packager/compare/v3.4.89...v3.4.88) (2026-03-03)
 
 
