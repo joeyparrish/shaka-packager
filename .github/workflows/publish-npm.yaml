@@ -86,8 +86,6 @@ jobs:
           echo NPM_LATEST=$NPM_LATEST >> $GITHUB_ENV
 
           # Debug the decisions made here.
-          echo "Release tags:"
-          echo "$RELEASE_TAGS" | sed -e 's/^/  /'
           echo "Latest release: $LATEST_RELEASE"
           echo "This release: $GIT_TAG_NAME"
           echo "NPM latest: $NPM_LATEST"
