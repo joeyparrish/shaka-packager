@@ -1,6 +1,13 @@
 # Changelog
 
 
+## [3.4.96](https://github.com/joeyparrish/shaka-packager/compare/v3.4.87...v3.4.96) (2026-03-04)
+
+
+### Bug Fixes
+
+* **ci:** Drop extra debugging ([ce776df](https://github.com/joeyparrish/shaka-packager/commit/ce776dfbc5e978885b1938afed1ebc77463e2da1))
+
 ## [3.4.87](https://github.com/joeyparrish/shaka-packager/compare/v3.4.88...v3.4.87) (2026-03-04)
 
 
