@@ -7,7 +7,9 @@
       "target_arch": "x64",
       "exe_ext": "",
       "generator": "Ninja"
-    },
+    }
+  ],
+  "x-hosted": [
     {
       "comment": "Intel mac images are supported until August 2027.",
       "os": "macos-15-intel",
